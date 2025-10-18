@@ -1,0 +1,281 @@
+/* Modern UI/UX Styles */
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-dark-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-dark-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-dark-600;
+}
+
+/* Glassmorphism Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient Text */
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.dark .gradient-text {
+  background-image: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+}
+
+/* Animated Gradient Background */
+.gradient-bg {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.dark .gradient-bg {
+  background: linear-gradient(-45deg, #1e3a8a, #7c3aed, #db2777, #059669);
+  background-size: 400% 400%;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Card Hover Effect */
+.card-hover {
+  @apply transition-all duration-300;
+}
+
+.card-hover:hover {
+  @apply transform -translate-y-1 shadow-2xl;
+}
+
+/* Glow Effect */
+.glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.dark .glow {
+  box-shadow: 0 0 30px rgba(96, 165, 250, 0.6);
+}
+
+/* Neon Border */
+.neon-border {
+  position: relative;
+}
+
+.neon-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Floating Animation */
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Pulse Animation */
+.pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Shimmer Effect */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% { left: 100%; }
+}
+
+/* Modern Button */
+.btn-modern {
+  @apply px-6 py-3 rounded-lg font-medium;
+  @apply bg-gradient-to-r from-blue-500 to-purple-600;
+  @apply text-white shadow-lg;
+  @apply hover:shadow-xl hover:scale-105;
+  @apply active:scale-95;
+  @apply transition-all duration-200;
+}
+
+.dark .btn-modern {
+  @apply from-blue-600 to-purple-700;
+}
+
+/* Modern Input */
+.input-modern {
+  @apply w-full px-4 py-3 rounded-lg;
+  @apply bg-white dark:bg-dark-800;
+  @apply border-2 border-gray-200 dark:border-dark-700;
+  @apply focus:border-blue-500 dark:focus:border-blue-400;
+  @apply focus:ring-4 focus:ring-blue-500/20;
+  @apply transition-all duration-200;
+  @apply text-gray-900 dark:text-gray-100;
+}
+
+/* Modern Card */
+.card-modern {
+  @apply bg-white dark:bg-dark-800;
+  @apply rounded-xl shadow-lg;
+  @apply border border-gray-100 dark:border-dark-700;
+  @apply p-6;
+  @apply transition-all duration-300;
+}
+
+.card-modern:hover {
+  @apply shadow-2xl transform -translate-y-1;
+}
+
+/* Badge */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-primary {
+  @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300;
+}
+
+.badge-success {
+  @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300;
+}
+
+.badge-warning {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300;
+}
+
+.badge-danger {
+  @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300;
+}
+
+/* Tooltip */
+.tooltip {
+  @apply absolute invisible opacity-0;
+  @apply bg-gray-900 dark:bg-dark-700 text-white text-sm;
+  @apply px-3 py-2 rounded-lg;
+  @apply transition-all duration-200;
+  @apply pointer-events-none;
+}
+
+.tooltip-trigger:hover .tooltip {
+  @apply visible opacity-100;
+}
+
+/* Loading Spinner */
+.spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3b82f6;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+.dark .spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-left-color: #60a5fa;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Skeleton Loader */
+.skeleton {
+  @apply bg-gray-200 dark:bg-dark-700;
+  @apply animate-pulse rounded;
+}
+
+/* Focus Visible */
+*:focus-visible {
+  @apply outline-none ring-4 ring-blue-500/50 dark:ring-blue-400/50;
+}
+
+/* Selection */
+::selection {
+  @apply bg-blue-500 text-white;
+}
+
+.dark ::selection {
+  @apply bg-blue-400 text-dark-900;
+}
+
+/* Transitions */
+.transition-smooth {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Grid Pattern Background */
+.grid-pattern {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Dot Pattern Background */
+.dot-pattern {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .dot-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
