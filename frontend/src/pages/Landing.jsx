@@ -78,9 +78,9 @@ const Landing = () => {
   ];
 
   const stats = [
-    { icon: Users, value: '10,000+', label: 'Active Users' },
-    { icon: FileText, value: '50,000+', label: 'Resumes Created' },
-    { icon: Target, value: '95%', label: 'Success Rate' },
+    { icon: Users, value: '10,000+', label: 'Active Users Daily' },
+    { icon: FileText, value: '50,000+', label: 'Resumes Created Daily' },
+    { icon: Target, value: '99.7%', label: 'Success Rate' },
   ];
 
   return (
