@@ -305,19 +305,19 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-12 px-4 sm:px-6 lg:px-8">
+      <footer className="bg-gray-900 text-gray-400 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <p>&copy; 2025 Resume Builder & Career Ecosystem. All rights reserved.</p>
-          <p className="mt-2 text-sm">
+          <p className="text-xs">
             Made with <span className="text-red-500">❤️</span> by{' '}
             <a 
               href="https://github.com/Bil-2" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-primary-500 hover:text-primary-400 transition-colors font-semibold"
+              className="text-primary-500 hover:text-primary-400 transition-colors font-medium"
             >
               Bil-2
             </a>
+            {' '}&copy; 2025 Resume Builder
           </p>
         </div>
       </footer>
