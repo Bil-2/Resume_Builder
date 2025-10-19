@@ -130,7 +130,7 @@ const Landing = () => {
             </div>
             
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {stats.map((stat, index) => {
                 const animations = ['slide-in-left', 'slide-in-bottom', 'slide-in-right'];
                 return (
@@ -144,7 +144,7 @@ const Landing = () => {
                         <stat.icon className="w-6 h-6 text-white" />
                       </div>
                     </div>
-                    <div className="stat-number text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent" style={{animationDelay: `${index * 150 + 200}ms`}}>
+                    <div className="stat-number text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent whitespace-nowrap" style={{animationDelay: `${index * 150 + 200}ms`}}>
                       {stat.value}
                     </div>
                     <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mt-1">{stat.label}</div>
