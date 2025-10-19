@@ -42,6 +42,16 @@ const ResumeList = () => {
       toast.success('Resume deleted successfully');
     } catch (error) {
       console.error('Error deleting resume:', error);
+      if (error.response?.status === 404) {
+        toast.error('Resume not found. It may have been already deleted.');
+        // Remove from local state anyway
+        removeResume(id);
+        fetchResumes(); // Refresh the list
+      } else if (error.response?.status === 401) {
+        toast.error('Please log in again to delete resumes.');
+      } else {
+        toast.error('Failed to delete resume. Please try again.');
+      }
     }
   };
 
@@ -52,6 +62,14 @@ const ResumeList = () => {
       toast.success('Resume duplicated successfully');
     } catch (error) {
       console.error('Error duplicating resume:', error);
+      if (error.response?.status === 404) {
+        toast.error('Resume not found. Please refresh the page.');
+        fetchResumes();
+      } else if (error.response?.status === 401) {
+        toast.error('Please log in again.');
+      } else {
+        toast.error('Failed to duplicate resume. Please try again.');
+      }
     }
   };
 
