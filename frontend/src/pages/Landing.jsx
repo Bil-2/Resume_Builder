@@ -160,10 +160,10 @@ const Landing = () => {
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 fade-in-scale" style={{animationDelay: '100ms'}}>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 animate-on-scroll">
               Everything You Need to Succeed
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto slide-in-bottom" style={{animationDelay: '300ms'}}>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-on-scroll">
               Powerful features designed to help you create the perfect resume and track your career growth
             </p>
           </div>
@@ -173,8 +173,7 @@ const Landing = () => {
               return (
                 <div
                   key={index}
-                  className={`group p-8 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-2xl transition-all duration-500 cursor-pointer ${animations[index]} transform hover:-translate-y-3 hover:scale-105`}
-                  style={{animationDelay: `${index * 150 + 500}ms`}}
+                  className="group p-8 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-2xl transition-all duration-500 cursor-pointer animate-on-scroll transform hover:-translate-y-3 hover:scale-105"
                 >
                   <div className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg group-hover:shadow-xl`}>
                   <feature.icon className="text-white" size={28} />
@@ -195,19 +194,19 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
-              <div className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/20 px-4 py-2 rounded-full mb-6 slide-in-left delay-100">
+              <div className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/20 px-4 py-2 rounded-full mb-6 animate-on-scroll">
                 <Target className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Why Choose Us</span>
               </div>
-              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6 slide-in-left delay-200">
+              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6 animate-on-scroll">
                 Your Complete Career Platform
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-10 slide-in-left delay-300">
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-10 animate-on-scroll">
                 We've built a comprehensive ecosystem that helps students and professionals create stunning resumes while tracking their career growth.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-start space-x-3 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-600 hover:shadow-lg transition-all duration-300 slide-up" style={{animationDelay: `${index * 100 + 400}ms`}}>
+                  <div key={index} className="flex items-start space-x-3 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-600 hover:shadow-lg transition-all duration-300 animate-on-scroll">
                     <benefit.icon className="text-green-500 dark:text-green-400 flex-shrink-0 mt-0.5" size={20} />
                     <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{benefit.text}</span>
                   </div>
@@ -215,7 +214,7 @@ const Landing = () => {
               </div>
             </div>
             
-            <div className="order-1 lg:order-2 slide-in-right delay-200">
+            <div className="order-1 lg:order-2 animate-on-scroll">
               <div className="relative">
                 {/* Decorative Elements */}
                 <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-3xl opacity-50"></div>
@@ -286,13 +285,13 @@ const Landing = () => {
         </div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 scale-in delay-100">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 animate-on-scroll">
             Ready to Build Your Future?
           </h2>
-          <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto slide-up delay-300">
+          <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto animate-on-scroll">
             Join thousands of students and professionals creating amazing resumes and tracking their career growth
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in delay-500">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll">
             <Link to="/register" className="group bg-white text-blue-600 hover:bg-gray-50 font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-200 inline-flex items-center space-x-2">
               <span>Get Started Free</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

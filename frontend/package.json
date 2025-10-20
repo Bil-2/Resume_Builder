@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Frontend for Resume Building & Career Ecosystem",
   "dependencies": {
+    "@react-oauth/google": "^0.12.2",
     "axios": "^1.6.5",
     "date-fns": "^3.0.6",
     "html2canvas": "^1.4.1",

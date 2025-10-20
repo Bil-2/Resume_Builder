@@ -6,6 +6,7 @@ import {
   updateProfile,
   changePassword
 } from '../controllers/authController.js';
+import { googleAuth } from '../controllers/googleAuthController.js';
 import { protect } from '../middleware/auth.js';
 import {
   registerValidation,
@@ -18,6 +19,7 @@ const router = express.Router();
 // Public routes
 router.post('/register', registerValidation, validate, register);
 router.post('/login', loginValidation, validate, login);
+router.post('/google', googleAuth);
 
 // Protected routes
 router.get('/me', protect, getMe);
