@@ -19,6 +19,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setAuth } = useAuthStore();
   const navigate = useNavigate();
+  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -79,12 +80,12 @@ const Login = () => {
     }
   };
 
-  const googleLogin = useGoogleLogin({
+  const googleLogin = GOOGLE_CLIENT_ID ? useGoogleLogin({
     onSuccess: handleGoogleSuccess,
     onError: () => {
       toast.error('Google sign-in failed');
     },
-  });
+  }) : null;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900 px-4 py-12">
@@ -188,6 +189,7 @@ const Login = () => {
           </form>
 
           {/* Divider */}
+          {GOOGLE_CLIENT_ID && (
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-200 dark:border-dark-600"></div>
@@ -196,8 +198,10 @@ const Login = () => {
               <span className="px-4 bg-white dark:bg-dark-800 text-gray-500 dark:text-gray-400">Or continue with</span>
             </div>
           </div>
+          )}
 
           {/* Google Sign-In Button */}
+          {GOOGLE_CLIENT_ID && (
           <button
             type="button"
             onClick={() => googleLogin()}
@@ -224,6 +228,7 @@ const Login = () => {
             </svg>
             <span>Sign in with Google</span>
           </button>
+          )}
 
           {/* Sign Up Link */}
           <div className="mt-6 text-center">
