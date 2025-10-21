@@ -307,16 +307,16 @@ const Landing = () => {
       <footer className="bg-gray-900 text-gray-400 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-xs">
-            Made with <span className="text-red-500">❤️</span> by{' '}
+            © 2025 Resume Builder - Made with  <span className="text-red-500">❤️</span> by{' '}
             <a 
               href="https://github.com/Bil-2" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-primary-500 hover:text-primary-400 transition-colors font-medium"
             >
-              Bil-2
+              Bil-2   
             </a>
-            {' '}&copy; 2025 Resume Builder
+                  . All rights reserved.
           </p>
         </div>
       </footer>
