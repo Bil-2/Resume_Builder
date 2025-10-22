@@ -25,8 +25,12 @@ connectDB();
 // Initialize express app
 const app = express();
 
-// Security middleware
-app.use(helmet());
+// Security middleware with Cross-Origin policies configured
+app.use(helmet({
+  crossOriginOpenerPolicy: { policy: "unsafe-none" },
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginEmbedderPolicy: false
+}));
 
 // CORS configuration
 app.use(cors({

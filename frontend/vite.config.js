@@ -11,6 +11,12 @@ export default defineConfig({
         target: 'http://localhost:5001',
         changeOrigin: true,
       }
+    },
+    // Configure headers to prevent COOP warnings
+    headers: {
+      'Cross-Origin-Opener-Policy': 'unsafe-none',
+      'Cross-Origin-Embedder-Policy': 'unsafe-none',
+      'Cross-Origin-Resource-Policy': 'cross-origin'
     }
   },
   build: {

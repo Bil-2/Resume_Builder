@@ -101,6 +101,8 @@ const Register = () => {
     onError: () => {
       toast.error('Google sign-up failed');
     },
+    ux_mode: 'popup',
+    flow: 'implicit',
   }) : null;
 
   return (

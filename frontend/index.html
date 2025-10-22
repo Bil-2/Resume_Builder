@@ -5,6 +5,42 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Resume Builder & Career Ecosystem - Build professional resumes automatically from your achievements" />
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="unsafe-none" />
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="unsafe-none" />
+    <script>
+      // Filter out harmless COOP warnings while keeping other console messages
+      (function() {
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        const shouldSuppressMessage = function(args) {
+          if (!args || args.length === 0) return false;
+          
+          // Convert all arguments to string for checking
+          const fullMessage = Array.from(args).map(arg => {
+            if (typeof arg === 'string') return arg;
+            if (arg && typeof arg === 'object') return JSON.stringify(arg);
+            return String(arg);
+          }).join(' ');
+          
+          // Suppress COOP window.closed warnings - these are informational only
+          // We've set policy to 'unsafe-none' so nothing is actually blocked
+          return (fullMessage.includes('Cross-Origin-Opener-Policy') || 
+                  fullMessage.includes('COOP')) && 
+                 fullMessage.includes('window.closed');
+        };
+        
+        console.error = function(...args) {
+          if (shouldSuppressMessage(args)) return;
+          originalError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+          if (shouldSuppressMessage(args)) return;
+          originalWarn.apply(console, args);
+        };
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">

@@ -85,6 +85,8 @@ const Login = () => {
     onError: () => {
       toast.error('Google sign-in failed');
     },
+    ux_mode: 'popup',
+    flow: 'implicit',
   }) : null;
 
   return (
