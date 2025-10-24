@@ -512,7 +512,7 @@ Special thanks to the open source community! 🌟
 
 ### 💖 Built with Love using MERN Stack
 
-**Resume Builder & Career Ecosystem** © 2024-2025
+**Resume Builder & Career Ecosystem** © 2025
 
 ⭐ **Star this repo if it helped you!** ⭐
 
