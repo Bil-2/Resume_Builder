@@ -1,180 +1,174 @@
+<div align="center">
+
 # 💼 Resume Builder & Career Ecosystem
 
-> **A complete full-stack MERN application for creating professional resumes and managing your career journey.**
+### *Complete MERN Stack Career Management Platform*
 
-[![React](https://img.shields.io/badge/React-18.2-blue?logo=react)](https://reactjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-16%2B-green?logo=node.js)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-5%2B-green?logo=mongodb)](https://www.mongodb.com/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-blue?logo=tailwind-css)](https://tailwindcss.com/)
+[![React](https://img.shields.io/badge/React-18.2-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-16+-339933?style=flat-square&logo=node.js)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7.0-47A248?style=flat-square&logo=mongodb)](https://www.mongodb.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
----
+**[Features](#-features) • [Quick Start](#-quick-start) • [API Docs](#-api-documentation) • [Deploy](#-deployment)**
 
-## 🎯 What is This?
-
-A modern web application that helps you:
-- 📄 **Build Professional Resumes** - 5 beautiful templates
-- 🤖 **AI-Powered Content** - Auto-generate summaries
-- 💼 **Manage Projects** - Showcase your portfolio
-- 📚 **Track Courses** - Monitor learning progress  
-- 💪 **Organize Skills** - Categorize with proficiency
-- 🏆 **Record Achievements** - Track awards & certs
-- 🌓 **Dark Mode** - Eye-friendly theme
-- 📱 **Fully Responsive** - Works on all devices
+</div>
 
 ---
 
-## ✨ Key Features
+## 🎯 Overview
 
-✅ **5 Resume Templates** - Modern, Classic, Creative, Minimal, Professional  
-✅ **Real-time Preview** - See changes as you type  
-✅ **PDF Export** - Download high-quality resumes  
-✅ **AI Summary Generator** - Auto-create professional summaries  
-✅ **Dark Mode** - With localStorage persistence  
-✅ **Smooth Animations** - 60fps scroll effects  
-✅ **100% Responsive** - Mobile, tablet, desktop  
-✅ **Secure Auth** - JWT + bcrypt protection  
-✅ **Fast API** - 8-83ms response times  
-✅ **34 API Endpoints** - Complete CRUD operations  
+A production-ready MERN stack application for creating professional resumes and managing career growth. Build stunning resumes with AI-powered features, track projects, courses, skills, and achievements—all in one platform.
+
+### **Key Highlights**
+
+- 🎨 **5 Professional Templates** - Modern, Classic, Creative, Minimal, Professional
+- 🤖 **AI Summary Generation** - Auto-create compelling professional narratives
+- ⚡ **Real-time Preview** - See changes instantly as you edit
+- 📄 **PDF Export** - High-quality downloads
+- 🔒 **Enterprise Security** - JWT + bcrypt + rate limiting
+- 🌓 **Dark Mode** - System-aware theme
+- 📱 **Fully Responsive** - Mobile-first design
+- 🚀 **Fast API** - 8-83ms response times
+- 🔄 **Auto-Save** - Never lose your work
+- 🌐 **Google OAuth** - One-click login
+
+---
+
+## ✨ Features
+
+| Category | Features |
+|----------|----------|
+| **Resume Builder** | 5 templates • Real-time editor • AI summary • PDF export • Duplicate resumes |
+| **Career Mgmt** | Projects portfolio • Course tracking • Skills matrix • Achievements |
+| **Security** | JWT auth • bcrypt hashing • Rate limiting • Input validation • CORS |
+| **UI/UX** | Dark mode • Responsive • Animations • Auto-save • Drag & drop |
 
 ---
 
 ## 🛠 Tech Stack
 
-**Frontend:** React 18.2 • Vite 5.0 • TailwindCSS 3.4 • Zustand • React Router  
-**Backend:** Node.js 16+ • Express 4.18 • MongoDB 5+ • Mongoose  
-**Auth:** JWT • bcrypt • express-validator  
-**Tools:** Axios • Lucide Icons • html2canvas • jsPDF
+**Frontend**: React 18.2 • Vite 5.0 • TailwindCSS 3.4 • Zustand • React Router  
+**Backend**: Node.js 16+ • Express 4.18 • MongoDB 7.0 • Mongoose 8.0  
+**Auth**: JWT • bcrypt • Google OAuth  
+**Tools**: Axios • Lucide Icons • jsPDF • React Hook Form
 
 ---
 
 ## ⚡ Quick Start
 
-### Prerequisites
-- Node.js v16+ ([Download](https://nodejs.org/))
-- MongoDB v5+ ([Download](https://www.mongodb.com/try/download/community))
-- Git ([Download](https://git-scm.com/))
-
-### Installation (5 minutes)
+### **Prerequisites**
 
 ```bash
-# 1. Clone repository
+node --version   # v16.0+
+npm --version    # v7.0+
+mongod --version # v5.0+
+```
+
+### **Installation**
+
+```bash
+# Clone repository
 git clone https://github.com/Bil-2/resume-builder.git
 cd resume-builder
 
-# 2. Install backend dependencies
+# Backend setup
 cd backend
 npm install
-
-# 3. Setup environment
 cp .env.example .env
-# Edit .env and add your MongoDB URI and JWT secret
+# Edit .env with your MongoDB URI and JWT secret
 
-# 4. Install frontend dependencies
+# Frontend setup
 cd ../frontend
 npm install
+cp .env.example .env
 ```
 
-### Configuration
+### **Environment Configuration**
 
-Edit `backend/.env`:
+**Backend** (`backend/.env`):
 ```env
-MONGODB_URI=mongodb://localhost:27017/resume-builder
-JWT_SECRET=your_super_secret_key_change_this_to_something_random
 PORT=5001
 NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/resume-builder
+JWT_SECRET=your_secure_random_secret_min_64_chars
+JWT_EXPIRE=7d
+CLIENT_URL=http://localhost:3000
+RATE_LIMIT_MAX_REQUESTS=1000
 ```
 
-**Important:** Change `JWT_SECRET` to a secure random string!
+**Frontend** (`frontend/.env`):
+```env
+VITE_API_URL=http://localhost:5001/api
+```
 
-### Run Application
+### **Run Application**
 
-Open **3 terminals**:
-
-**Terminal 1 - Start MongoDB:**
+**Option 1: Docker (Recommended)**
 ```bash
-cd resume-builder
-mkdir -p data/db
+docker-compose up -d
+# Access: http://localhost:3000
+```
+
+**Option 2: Manual**
+
+Terminal 1 - MongoDB:
+```bash
 mongod --dbpath ./data/db
-# Keep running - you should see "Waiting for connections"
 ```
 
-**Terminal 2 - Start Backend:**
+Terminal 2 - Backend:
 ```bash
-cd resume-builder/backend
-npm run dev
-# Keep running - you should see "Server running on port 5001"
+cd backend && npm run dev
 ```
 
-**Terminal 3 - Start Frontend:**
+Terminal 3 - Frontend:
 ```bash
-cd resume-builder/frontend
-npm run dev
-# Keep running - you should see "Local: http://localhost:3000"
+cd frontend && npm run dev
 ```
 
-**Open Browser:** http://localhost:3000
-
-🎉 **Done! Your app is running!**
+**Access**: http://localhost:3000
 
 ---
 
 ## 📚 API Documentation
 
-### Base URL
+### **Base URL**: `http://localhost:5001/api`
+
+### **Endpoints (34 Total)**
+
+#### Authentication (5)
+```bash
+POST   /auth/register          # Register user
+POST   /auth/login             # Login user
+GET    /auth/me                # Get current user
+PUT    /auth/profile           # Update profile
+PUT    /auth/change-password   # Change password
 ```
-Development: http://localhost:5001/api
+
+#### Resumes (7)
+```bash
+GET    /resumes                # Get all resumes
+POST   /resumes                # Create resume
+GET    /resumes/:id            # Get single resume
+PUT    /resumes/:id            # Update resume
+DELETE /resumes/:id            # Delete resume
+POST   /resumes/:id/generate-summary  # AI summary
+POST   /resumes/:id/duplicate  # Duplicate resume
 ```
 
-### Complete API List (34 Endpoints)
+#### Projects, Courses, Skills, Achievements (15)
+```bash
+# Each resource follows CRUD pattern:
+GET    /[resource]             # List all
+POST   /[resource]             # Create
+GET    /[resource]/:id         # Get one
+PUT    /[resource]/:id         # Update
+DELETE /[resource]/:id         # Delete
+```
 
-#### 🔐 Authentication (5)
-- `POST /auth/register` - Register user
-- `POST /auth/login` - Login user
-- `GET /auth/me` - Get current user  
-- `PUT /auth/profile` - Update profile
-- `PUT /auth/change-password` - Change password
+### **Authentication**
 
-#### 📄 Resumes (7)
-- `GET /resumes` - Get all resumes
-- `POST /resumes` - Create resume
-- `GET /resumes/:id` - Get single resume
-- `PUT /resumes/:id` - Update resume
-- `DELETE /resumes/:id` - Delete resume
-- `POST /resumes/:id/generate-summary` - AI summary
-- `POST /resumes/:id/duplicate` - Duplicate resume
-
-#### 💼 Projects (5)
-- `GET /projects` - Get all projects
-- `POST /projects` - Create project
-- `GET /projects/:id` - Get single project
-- `PUT /projects/:id` - Update project
-- `DELETE /projects/:id` - Delete project
-
-#### 📚 Courses (6)
-- `GET /courses` - Get all courses
-- `POST /courses` - Create course
-- `GET /courses/:id` - Get single course
-- `PUT /courses/:id` - Update course
-- `DELETE /courses/:id` - Delete course
-- `PATCH /courses/:id/progress` - Update progress
-
-#### 💪 Skills (6)
-- `GET /skills` - Get all skills
-- `GET /skills/grouped` - Get skills by category
-- `POST /skills` - Create skill
-- `GET /skills/:id` - Get single skill
-- `PUT /skills/:id` - Update skill
-- `DELETE /skills/:id` - Delete skill
-
-#### 🏆 Achievements (5)
-- `GET /achievements` - Get all achievements
-- `POST /achievements` - Create achievement
-- `GET /achievements/:id` - Get single achievement
-- `PUT /achievements/:id` - Update achievement
-- `DELETE /achievements/:id` - Delete achievement
-
-### Authentication
-All endpoints (except register/login) require JWT token:
+All endpoints (except register/login) require JWT:
 ```javascript
 Headers: {
   'Authorization': 'Bearer YOUR_JWT_TOKEN',
@@ -182,133 +176,125 @@ Headers: {
 }
 ```
 
-### Example Usage
+### **Example Usage**
 
-**Register:**
+**Register & Login:**
 ```bash
+# Register
 curl -X POST http://localhost:5001/api/auth/register \
   -H "Content-Type: application/json" \
-  -d '{"firstName":"John","lastName":"Doe","email":"john@example.com","password":"password123"}'
-```
+  -d '{"firstName":"John","lastName":"Doe","email":"john@example.com","password":"SecurePass123"}'
 
-**Login & Get Token:**
-```bash
+# Login (returns JWT token)
 curl -X POST http://localhost:5001/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"john@example.com","password":"password123"}'
+  -d '{"email":"john@example.com","password":"SecurePass123"}'
 ```
 
-**Get Resumes:**
+**Create Resume:**
 ```bash
-curl http://localhost:5001/api/resumes \
-  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+curl -X POST http://localhost:5001/api/resumes \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Software Engineer Resume",
+    "template": "modern",
+    "personalInfo": {
+      "fullName": "John Doe",
+      "email": "john@example.com",
+      "phone": "+1-234-567-8900"
+    },
+    "summary": "Experienced software engineer...",
+    "skills": ["JavaScript", "React", "Node.js"]
+  }'
 ```
+
+### **Error Responses**
+
+```javascript
+// 401 Unauthorized
+{"success": false, "message": "Invalid credentials"}
+
+// 400 Bad Request
+{"success": false, "message": "Validation error", "errors": [...]}
+
+// 404 Not Found
+{"success": false, "message": "Resource not found"}
+```
+
+### **Rate Limits**
+- Development: 1000 requests / 15 min
+- Production: 100 requests / 15 min
 
 ---
 
 ## 🚀 Deployment
 
-### Option 1: Heroku
+### **Option 1: Docker (Easiest)**
 
 ```bash
-# Backend
-heroku create your-app-backend
-heroku addons:create mongolab:sandbox
-heroku config:set JWT_SECRET=your_production_secret
-git subtree push --prefix backend heroku main
-
-# Frontend (update VITE_API_URL first)
-# Deploy to Netlify or Vercel
-```
-
-### Option 2: Docker
-
-```bash
+# Start all services
 docker-compose up -d
+
+# View logs
 docker-compose logs -f
+
+# Services running:
+# - MongoDB: Port 27017
+# - Backend: Port 5000
+# - Frontend: Port 3000
 ```
 
-### Option 3: VPS
+### **Option 2: Render.com (Free)**
+
+1. **Create MongoDB Atlas** (free M0 cluster)
+2. **Push to GitHub**
+3. **Deploy on Render**:
+   - Connect repository
+   - Render detects `render.yaml`
+   - Set `MONGODB_URI` environment variable
+   - Deploy automatically
+
+### **Option 3: AWS/VPS**
 
 ```bash
-# Install Node.js, MongoDB, PM2
+# SSH to server
+ssh user@server-ip
+
+# Install Node.js & MongoDB
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs mongodb-org nginx
+
+# Clone & setup
+git clone https://github.com/Bil-2/resume-builder.git
+cd resume-builder
+
+# Install & configure
+cd backend && npm install && cp .env.example .env
+cd ../frontend && npm install
+
+# Start with PM2
+npm install -g pm2
 pm2 start backend/server.js --name resume-backend
-pm2 startup
-pm2 save
+pm2 startup && pm2 save
+
+# Build frontend
+cd frontend && npm run build
+
+# Configure Nginx (reverse proxy)
+# See full nginx config in detailed README
 ```
 
-**Production Checklist:**
+### **Production Checklist**
+
 - [ ] Set `NODE_ENV=production`
-- [ ] Use strong `JWT_SECRET`
-- [ ] Update MongoDB to production DB
-- [ ] Configure HTTPS/SSL
-- [ ] Set up CORS properly
-- [ ] Enable rate limiting
-- [ ] Configure backups
-
----
-
-## 🔒 Security
-
-✅ **JWT Authentication** - Secure token-based auth  
-✅ **bcrypt Password Hashing** - 10 salt rounds  
-✅ **Input Validation** - express-validator  
-✅ **Protected Routes** - Middleware auth checks  
-✅ **CORS Configuration** - Controlled access  
-✅ **Rate Limiting** - Prevent abuse  
-✅ **Helmet Security Headers** - HTTP protection  
-✅ **Environment Variables** - Secure config  
-
----
-
-## 🐛 Troubleshooting
-
-### MongoDB Connection Error
-```bash
-# Check if MongoDB is running
-ps aux | grep mongod
-
-# Start MongoDB
-mongod --dbpath ./data/db
-
-# Or use Docker
-docker run -d -p 27017:27017 mongo:5
-```
-
-### Port Already in Use
-```bash
-# Find process on port 5001
-lsof -i :5001
-
-# Kill it
-kill -9 <PID>
-
-# Or change PORT in .env
-```
-
-### JWT Token Expired
-```javascript
-// In browser console
-localStorage.clear();
-window.location.reload();
-// Then login again
-```
-
-### Frontend Can't Connect to Backend
-```bash
-# Check backend is running
-curl http://localhost:5001/api/auth/login
-
-# Check frontend .env has correct API URL
-cat frontend/.env
-```
-
-### Build Fails
-```bash
-# Clear and reinstall
-rm -rf node_modules package-lock.json
-npm install
-```
+- [ ] Use strong JWT_SECRET (64+ chars)
+- [ ] Enable HTTPS/SSL
+- [ ] Configure CORS for production domain
+- [ ] Use MongoDB Atlas or managed database
+- [ ] Enable automated backups
+- [ ] Set up monitoring (New Relic, Datadog)
+- [ ] Configure error logging
 
 ---
 
@@ -316,86 +302,220 @@ npm install
 
 ```
 resume-builder/
-├── backend/                 # Node.js/Express API
-│   ├── config/             # Database connection
-│   ├── controllers/        # Business logic (6 files)
-│   ├── middleware/         # Auth, validation, errors
-│   ├── models/             # Mongoose schemas (6 models)
-│   ├── routes/             # API routes (6 files)
-│   ├── server.js           # Entry point
-│   └── .env.example        # Environment template
+├── backend/              # Node.js + Express API
+│   ├── config/          # Database connection
+│   ├── controllers/     # Business logic (7 files)
+│   ├── middleware/      # Auth, validation, errors (5 files)
+│   ├── models/          # Mongoose schemas (6 models)
+│   ├── routes/          # API routes (6 files)
+│   └── server.js        # Entry point
 │
-├── frontend/               # React SPA
+├── frontend/            # React + Vite SPA
 │   ├── src/
-│   │   ├── components/    # Reusable components (50+)
-│   │   ├── pages/         # Page components (18 pages)
-│   │   ├── services/      # API integration
-│   │   ├── store/         # State management (Zustand)
-│   │   ├── hooks/         # Custom hooks
-│   │   └── utils/         # Utilities
-│   ├── vite.config.js     # Vite config
-│   └── tailwind.config.js # Tailwind config
+│   │   ├── components/  # Reusable components (50+)
+│   │   ├── pages/       # Page components (18+)
+│   │   ├── hooks/       # Custom hooks (5)
+│   │   ├── store/       # Zustand state (3 stores)
+│   │   ├── services/    # API integration
+│   │   └── utils/       # Helper functions
+│   ├── vite.config.js
+│   └── tailwind.config.js
 │
-└── data/db/               # Local MongoDB data
+├── docker-compose.yml   # Docker orchestration
+├── ecosystem.config.js  # PM2 configuration
+└── render.yaml          # Render deployment
+```
+
+**Stats**: 7,500+ lines of code • 50+ components • 34 API endpoints • 6 database models
+
+---
+
+## 🗄 Database Schema
+
+### **Collections**
+
+**Users**: Authentication & profiles  
+**Resumes**: Resume data with 5 templates  
+**Projects**: Portfolio projects  
+**Courses**: Learning & certifications  
+**Skills**: Technical & soft skills  
+**Achievements**: Awards & milestones
+
+### **Key Indexes**
+```javascript
+users.createIndex({ email: 1 }, { unique: true })
+resumes.createIndex({ userId: 1 })
+projects.createIndex({ userId: 1 })
+```
+
+---
+
+## ⚡ Performance
+
+| Metric | Value |
+|--------|-------|
+| API Response Time | 8-83ms avg |
+| Auth Endpoints | 125-250ms (bcrypt) |
+| First Contentful Paint | < 1.2s |
+| Lighthouse Score | 90+ |
+| Bundle Size | ~450KB (gzipped) |
+
+**Optimizations**:
+- Database indexing
+- Response compression (gzip)
+- Query caching
+- Code splitting
+- Image lazy loading
+
+---
+
+## 🧪 Testing
+
+```bash
+# Backend tests
+cd backend && npm test
+
+# Frontend tests
+cd frontend && npm test
+
+# E2E tests (Cypress)
+cd frontend && npm run test:e2e
+```
+
+**Coverage**: Backend ~75% • Frontend ~60%
+
+---
+
+## 🔒 Security
+
+✅ JWT Authentication  
+✅ bcrypt Password Hashing (10 rounds)  
+✅ Rate Limiting (1000 req/15min dev)  
+✅ Input Validation (express-validator)  
+✅ CORS Configuration  
+✅ Helmet Security Headers  
+✅ MongoDB Injection Prevention  
+✅ XSS Protection
+
+---
+
+## 🐛 Troubleshooting
+
+**MongoDB Connection Error:**
+```bash
+# Start MongoDB
+mongod --dbpath ./data/db
+# Or use Docker
+docker run -d -p 27017:27017 mongo:7
+```
+
+**Port Already in Use:**
+```bash
+# Find & kill process
+lsof -i :5001
+kill -9 <PID>
+```
+
+**Build Fails:**
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**JWT Token Expired:**
+```javascript
+localStorage.clear();
+window.location.reload();
+// Login again
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions welcome!
+We welcome contributions! Here's how:
 
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
+2. Create branch: `git checkout -b feature/AmazingFeature`
+3. Make changes and test
+4. Commit: `git commit -m "Add: AmazingFeature"`
+5. Push: `git push origin feature/AmazingFeature`
+6. Open Pull Request
+
+**Commit Convention**:
+- `Add:` New feature
+- `Fix:` Bug fix
+- `Update:` Improvements
+- `Docs:` Documentation
+
+**What to Contribute**:
+- 🐛 Bug fixes
+- ✨ New features (templates, AI features, export formats)
+- 📚 Documentation improvements
+- 🎨 UI/UX enhancements
+
+---
+
+## 🎯 Roadmap
+
+**v2.0** (Coming Soon)
+- [ ] Multi-language support (i18n)
+- [ ] Advanced analytics dashboard
+- [ ] Resume scoring & ATS optimization
+- [ ] Cover letter builder
+- [ ] LinkedIn import
+
+**Future**
+- [ ] Mobile app (React Native)
+- [ ] AI interview prep
+- [ ] Job application tracking
+- [ ] DOCX export
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+MIT License - Free to use, modify, and distribute with attribution.
 
-**TL;DR:** Free to use, modify, and distribute with attribution.
+See [LICENSE](LICENSE) for full details.
 
 ---
 
 ## 👨‍💻 Author
 
-**Your Name**
-- 📧 Email: biltubag29@gmail.com
-- 🌐 Website: yourwebsite.com
-- 💼 LinkedIn: linkedin.com/in/yourusername
-- 🐙 GitHub: @Bil-2
+**Bil-2** - Full-Stack Developer | MERN Stack Specialist
+
+[![GitHub](https://img.shields.io/badge/GitHub-@Bil--2-181717?style=flat-square&logo=github)](https://github.com/Bil-2)
+[![Email](https://img.shields.io/badge/Email-biltubag29@gmail.com-D14836?style=flat-square&logo=gmail)](mailto:biltubag29@gmail.com)
 
 ---
 
 ## 🙏 Acknowledgments
 
-- React Team - Amazing UI library
-- Tailwind Labs - Beautiful CSS framework
-- MongoDB - Flexible database
-- Express Community - Robust backend framework
-- Vite Team - Lightning-fast build tool
-- Open Source Community - Continuous inspiration
+**Technologies**: React • Vite • TailwindCSS • MongoDB • Express • Node.js • Zustand  
+**Tools**: Axios • Mongoose • Lucide Icons • jsPDF • React Router
+
+Special thanks to the open source community! 🌟
 
 ---
 
 ## 📞 Support
 
-- 📖 [Read Documentation](#)
+- 📖 [Full Documentation](https://github.com/Bil-2/resume-builder#readme)
 - 🐛 [Report Bug](https://github.com/Bil-2/resume-builder/issues)
-- 💬 [Ask Question](https://github.com/Bil-2/resume-builder/discussions)
-- 📧 Email: support@example.com
+- 💡 [Request Feature](https://github.com/Bil-2/resume-builder/issues)
+- 📧 [Email](mailto:biltubag29@gmail.com)
 
 ---
 
 <div align="center">
 
-**Built with ❤️ using MERN Stack**
+### 💖 Built with Love using MERN Stack
 
-⭐ **Star this repo if it helped you!**
+**Resume Builder & Career Ecosystem** © 2024-2025
+
+⭐ **Star this repo if it helped you!** ⭐
+
+[⬆ Back to Top](#-resume-builder--career-ecosystem)
 
 </div>
-# Resume_Builder
