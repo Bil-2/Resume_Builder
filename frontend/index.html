@@ -8,36 +8,21 @@
     <meta http-equiv="Cross-Origin-Opener-Policy" content="unsafe-none" />
     <meta http-equiv="Cross-Origin-Embedder-Policy" content="unsafe-none" />
     <script>
-      // Filter out harmless COOP warnings while keeping other console messages
+      // Suppress harmless Cross-Origin-Opener-Policy warnings from Google OAuth
       (function() {
         const originalError = console.error;
-        const originalWarn = console.warn;
-        
-        const shouldSuppressMessage = function(args) {
-          if (!args || args.length === 0) return false;
-          
-          // Convert all arguments to string for checking
-          const fullMessage = Array.from(args).map(arg => {
-            if (typeof arg === 'string') return arg;
-            if (arg && typeof arg === 'object') return JSON.stringify(arg);
-            return String(arg);
-          }).join(' ');
-          
-          // Suppress COOP window.closed warnings - these are informational only
-          // We've set policy to 'unsafe-none' so nothing is actually blocked
-          return (fullMessage.includes('Cross-Origin-Opener-Policy') || 
-                  fullMessage.includes('COOP')) && 
-                 fullMessage.includes('window.closed');
-        };
         
         console.error = function(...args) {
-          if (shouldSuppressMessage(args)) return;
+          // Check if this is a COOP warning about window.closed
+          const message = args[0];
+          if (typeof message === 'string' && 
+              message.includes('Cross-Origin-Opener-Policy') && 
+              message.includes('window.closed')) {
+            // Suppress this specific warning - it's harmless
+            return;
+          }
+          // Pass through all other errors
           originalError.apply(console, args);
-        };
-        
-        console.warn = function(...args) {
-          if (shouldSuppressMessage(args)) return;
-          originalWarn.apply(console, args);
         };
       })();
     </script>
