@@ -6,6 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { initScrollAnimations } from './hooks/useScrollAnimation';
 import './utils/verifyDarkMode'; // Dark mode verification utility
 import './utils/verifyResponsive'; // Responsive design verification utility
+import './utils/keepBackendAwake'; // Keep backend awake to prevent cold starts
 
 // Layout
 import Layout from './components/Layout/Layout';
