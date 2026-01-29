@@ -35,7 +35,6 @@ app.use(helmet({
 // CORS configuration
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://resume-builder-sooty-tau.vercel.app',
   process.env.CLIENT_URL
 ].filter(Boolean);
 
