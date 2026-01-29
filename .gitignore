@@ -63,3 +63,6 @@ comprehensive-test.js
 extended-stress-test.js
 quick-verify.js
 DEMO_READY_REPORT.md
+
+# Local Netlify folder
+.netlify
