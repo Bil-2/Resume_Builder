@@ -1,4 +1,4 @@
-<div align="center">
+&<div align="center">
 
 # 💼 Resume Builder & Career Ecosystem
 
@@ -12,6 +12,13 @@
 **[Features](#-features) • [Quick Start](#-quick-start) • [API Docs](#-api-documentation) • [Deploy](#-deployment)**
 
 </div>
+
+### 🚀 Live Demo
+
+| Component | URL | Status |
+|-----------|-----|--------|
+| **Frontend** | [resume-builder-biltu.netlify.app](https://resume-builder-biltu.netlify.app) | ✅ Live |
+| **Backend** | [resume-builder-tpk7.onrender.com](https://resume-builder-tpk7.onrender.com) | ✅ Live |
 
 ---
 
