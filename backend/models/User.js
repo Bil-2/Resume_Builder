@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: function() {
+    required: function () {
       return this.authProvider === 'local';
     },
     minlength: [6, 'Password must be at least 6 characters'],
@@ -91,31 +91,31 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   // Skip password hashing for OAuth users or if password not modified
   if (!this.isModified('password') || !this.password) {
     return next();
   }
-  
+
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
 // Method to compare passwords
-userSchema.methods.comparePassword = async function(candidatePassword) {
+userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
 // Method to get public profile
-userSchema.methods.getPublicProfile = function() {
+userSchema.methods.getPublicProfile = function () {
   const userObject = this.toObject();
   delete userObject.password;
   return userObject;
 };
 
 // Indexes for faster queries
-userSchema.index({ email: 1 }, { unique: true }); // Unique email lookup
+
 userSchema.index({ isVerified: 1 }); // Filter verified users
 userSchema.index({ role: 1 }); // Filter by role
 userSchema.index({ lastLogin: -1 }); // Sort by last login

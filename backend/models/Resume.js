@@ -194,10 +194,10 @@ const resumeSchema = new mongoose.Schema({
 
 // Index for faster queries
 resumeSchema.index({ userId: 1, isActive: 1 });
-resumeSchema.index({ userId: 1, createdAt: -1 });
+
 
 // Update lastModified on save
-resumeSchema.pre('save', function(next) {
+resumeSchema.pre('save', function (next) {
   this.lastModified = Date.now();
   next();
 });
