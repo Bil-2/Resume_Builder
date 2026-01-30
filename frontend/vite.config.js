@@ -21,6 +21,16 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom', 'axios', 'zustand'],
+          pdf: ['html2canvas', 'jspdf'],
+          ui: ['lucide-react', 'react-icons', 'react-hot-toast', 'react-beautiful-dnd']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 600
   }
 });
