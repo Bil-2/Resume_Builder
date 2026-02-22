@@ -262,8 +262,8 @@ docker-compose logs -f
    - **Important:** Set the **Build Command**, **Output Directory**, and **Install Command** to empty (toggle Override and leave blank).
    - Set the following Environment Variables:
      - `NODE_ENV` = `production`
-     - `MONGODB_URI` = `mongodb+srv://resumebuilder:Cu4nHcmt8YoMyRSn@bil-2.xu2re3p.mongodb.net/resume-builder?retryWrites=true&w=majority&appName=bil-2`
-     - `JWT_SECRET` = `b3d337659548f40c92a76ff03a6c60ade31f91b0766fb24fbd5e6393d88fc4fb724c3c66bcaefb9af9a65018c71035e60516c9079775e13bd2b16a02e5699310`
+     - `MONGODB_URI` = `<YOUR_MONGODB_ATLAS_CONNECTION_STRING>`
+     - `JWT_SECRET` = `<YOUR_JWT_SECRET>`
      - `JWT_EXPIRE` = `7d`
      - `CLIENT_URL` = `https://resume-builder-biltu.netlify.app`
      - `RATE_LIMIT_MAX_REQUESTS` = `100`
