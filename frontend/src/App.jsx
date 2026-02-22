@@ -6,7 +6,6 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { initScrollAnimations } from './hooks/useScrollAnimation';
 import './utils/verifyDarkMode'; // Dark mode verification utility
 import './utils/verifyResponsive'; // Responsive design verification utility
-import './utils/keepBackendAwake'; // Keep backend awake to prevent cold starts
 
 // Layout
 import Layout from './components/Layout/Layout';
@@ -60,36 +59,36 @@ function App() {
         {/* Protected routes */}
         <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
           <Route path="/dashboard" element={<Dashboard />} />
-          
+
           {/* Resume routes */}
           <Route path="/resumes" element={<ResumeList />} />
           <Route path="/resumes/new" element={<ResumeBuilder />} />
           <Route path="/resumes/:id/edit" element={<ResumeBuilder />} />
           <Route path="/resumes/:id/preview" element={<ResumePreview />} />
-          
+
           {/* Project routes */}
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/new" element={<ProjectForm />} />
           <Route path="/projects/:id/edit" element={<ProjectForm />} />
-          
+
           {/* Course routes */}
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/new" element={<CourseForm />} />
           <Route path="/courses/:id/edit" element={<CourseForm />} />
-          
+
           {/* Achievement routes */}
           <Route path="/achievements" element={<Achievements />} />
           <Route path="/achievements/new" element={<AchievementForm />} />
           <Route path="/achievements/:id/edit" element={<AchievementForm />} />
-          
+
           {/* Skill routes */}
           <Route path="/skills" element={<Skills />} />
           <Route path="/skills/new" element={<SkillForm />} />
           <Route path="/skills/:id/edit" element={<SkillForm />} />
-          
+
           {/* Profile routes */}
           <Route path="/profile" element={<Profile />} />
-          
+
           {/* Settings routes */}
           <Route path="/settings" element={<Settings />} />
         </Route>

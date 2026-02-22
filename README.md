@@ -18,7 +18,7 @@
 | Component | URL | Status |
 |-----------|-----|--------|
 | **Frontend** | [resume-builder-biltu.netlify.app](https://resume-builder-biltu.netlify.app) | ✅ Live |
-| **Backend** | [resume-builder-tpk7.onrender.com](https://resume-builder-tpk7.onrender.com) | ✅ Live |
+| **Backend** | [Vercel Deployment URL](https://vercel.com/) | ⏳ Pending |
 
 ---
 
@@ -252,14 +252,23 @@ docker-compose logs -f
 # - Frontend: Port 3000
 ```
 
-### **Option 2: Render.com (Free)**
+### **Option 2: Vercel (Free)**
 
 1. **Create MongoDB Atlas** (free M0 cluster)
 2. **Push to GitHub**
-3. **Deploy on Render**:
-   - Connect repository
-   - Render detects `render.yaml`
-   - Set `MONGODB_URI` environment variable
+3. **Deploy on Vercel**:
+   - Create a new project and import the repository.
+   - Set the **Root Directory** to `backend`.
+   - **Important:** Set the **Build Command**, **Output Directory**, and **Install Command** to empty (toggle Override and leave blank).
+   - Set the following Environment Variables:
+     - `NODE_ENV` = `production`
+     - `MONGODB_URI` = `mongodb+srv://resumebuilder:Cu4nHcmt8YoMyRSn@bil-2.xu2re3p.mongodb.net/resume-builder?retryWrites=true&w=majority&appName=bil-2`
+     - `JWT_SECRET` = `b3d337659548f40c92a76ff03a6c60ade31f91b0766fb24fbd5e6393d88fc4fb724c3c66bcaefb9af9a65018c71035e60516c9079775e13bd2b16a02e5699310`
+     - `JWT_EXPIRE` = `7d`
+     - `CLIENT_URL` = `https://resume-builder-biltu.netlify.app`
+     - `RATE_LIMIT_MAX_REQUESTS` = `100`
+     - `GOOGLE_CLIENT_ID` = `456065185658-0j003u1rk8uq41api9oq2rfr7gjim6gq.apps.googleusercontent.com`
+   - Vercel automatically detects `vercel.json` for serverless function configuration.
    - Deploy automatically
 
 ### **Option 3: AWS/VPS**
@@ -330,7 +339,7 @@ resume-builder/
 │
 ├── docker-compose.yml   # Docker orchestration
 ├── ecosystem.config.js  # PM2 configuration
-└── render.yaml          # Render deployment
+└── backend/vercel.json  # Vercel deployment
 ```
 
 **Stats**: 7,500+ lines of code • 50+ components • 34 API endpoints • 6 database models

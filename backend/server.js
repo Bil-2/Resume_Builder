@@ -42,7 +42,7 @@ app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
+
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -133,32 +133,43 @@ app.use((req, res) => {
 // Error handler middleware (must be last)
 app.use(errorHandler);
 
-// Start server
-const PORT = process.env.PORT || 5001;
-const server = app.listen(PORT, () => {
-  console.log(`
-╔═══════════════════════════════════════════════════════════╗
-║                                                           ║
-║   🚀 Resume Builder & Career Ecosystem API                ║
-║                                                           ║
-║   Server running in ${process.env.NODE_ENV || 'development'} mode                      ║
-║   Port: ${PORT}                                            ║
-║   URL: http://localhost:${PORT}                            ║
-║                                                           ║
-╚═══════════════════════════════════════════════════════════╝
-  `);
-});
+// Start server (only if not running in a Vercel serverless environment)
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 5001;
+  const server = app.listen(PORT, () => {
+    console.log(`
+  ╔═══════════════════════════════════════════════════════════╗
+  ║                                                           ║
+  ║   🚀 Resume Builder & Career Ecosystem API                ║
+  ║                                                           ║
+  ║   Server running in ${process.env.NODE_ENV || 'development'} mode                      ║
+  ║   Port: ${PORT}                                            ║
+  ║   URL: http://localhost:${PORT}                            ║
+  ║                                                           ║
+  ╚═══════════════════════════════════════════════════════════╝
+    `);
+  });
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error(`❌ Unhandled Rejection: ${err.message}`);
-  server.close(() => process.exit(1));
-});
+  // Handle unhandled promise rejections
+  process.on('unhandledRejection', (err) => {
+    console.error(`❌ Unhandled Rejection: ${err.message}`);
+    server.close(() => process.exit(1));
+  });
 
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error(`❌ Uncaught Exception: ${err.message}`);
-  process.exit(1);
-});
+  // Handle uncaught exceptions
+  process.on('uncaughtException', (err) => {
+    console.error(`❌ Uncaught Exception: ${err.message}`);
+    process.exit(1);
+  });
+} else {
+  // Unhandled error handlers for Vercel environment
+  process.on('unhandledRejection', (err) => {
+    console.error(`❌ Unhandled Rejection: ${err.message}`);
+  });
+
+  process.on('uncaughtException', (err) => {
+    console.error(`❌ Uncaught Exception: ${err.message}`);
+  });
+}
 
 export default app;
