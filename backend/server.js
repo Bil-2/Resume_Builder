@@ -38,13 +38,23 @@ const allowedOrigins = [
   process.env.CLIENT_URL
 ].filter(Boolean);
 
-app.use(cors({
-  origin: '*', // Vercel handles the specific routing and Netlify domain, so Express can be permissive
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  exposedHeaders: ['Content-Type', 'Authorization']
-}));
+// Enable CORS for all routes and forcefully handle OPTIONS preflight.
+// Using explicit headers is more reliable in Vercel than the 'cors' package.
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://resume-builder-biltu.netlify.app');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+    return res.status(200).json({});
+  }
+
+  next();
+});
 
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
