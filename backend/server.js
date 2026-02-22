@@ -56,6 +56,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Ensure DB is connected before every request (critical for Vercel serverless)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('DB connection failed:', error.message);
+    return res.status(503).json({ success: false, message: 'Database unavailable. Please try again.' });
+  }
+});
+
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));

@@ -36,7 +36,8 @@ const connectDB = async () => {
     return cached.conn;
   } catch (error) {
     console.error(`❌ Final Error connecting to MongoDB: ${error.message}`);
-    process.exit(1);
+    // Do NOT call process.exit(1) in serverless — it kills the function
+    throw error;
   }
 };
 
