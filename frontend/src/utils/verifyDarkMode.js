@@ -37,7 +37,7 @@ export const verifyDarkMode = () => {
       const styles = window.getComputedStyle(firstElement);
       const color = styles.color;
       const backgroundColor = styles.backgroundColor;
-      
+
       console.log(`✅ ${name}:`);
       console.log(`   Count: ${elements.length}`);
       console.log(`   Text Color: ${color}`);
@@ -58,18 +58,18 @@ export const verifyDarkMode = () => {
     const styles = window.getComputedStyle(el);
     const color = styles.color;
     const bg = styles.backgroundColor;
-    
+
     // Check if text is too similar to background
     if (color && bg && color !== 'rgba(0, 0, 0, 0)' && bg !== 'rgba(0, 0, 0, 0)') {
       const textRGB = color.match(/\d+/g);
       const bgRGB = bg.match(/\d+/g);
-      
+
       if (textRGB && bgRGB) {
         const diff = Math.abs(
           (parseInt(textRGB[0]) + parseInt(textRGB[1]) + parseInt(textRGB[2])) -
           (parseInt(bgRGB[0]) + parseInt(bgRGB[1]) + parseInt(bgRGB[2]))
         );
-        
+
         if (diff < 100) { // Low contrast
           invisibleCount++;
           invisibleElements.push({
@@ -91,7 +91,7 @@ export const verifyDarkMode = () => {
 
   console.log('\n=====================================');
   console.log('🎉 VERIFICATION COMPLETE!');
-  
+
   return {
     isDarkMode,
     savedTheme,
@@ -103,7 +103,6 @@ export const verifyDarkMode = () => {
 // Make available globally
 if (typeof window !== 'undefined') {
   window.verifyDarkMode = verifyDarkMode;
-  console.log('💡 Run window.verifyDarkMode() to check dark mode status');
 }
 
 export default verifyDarkMode;

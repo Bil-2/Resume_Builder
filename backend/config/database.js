@@ -1,38 +1,41 @@
 import mongoose from 'mongoose';
 
+// Connection cache for serverless environments (like Vercel)
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
 const connectDB = async () => {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    const opts = {
+      maxPoolSize: 10,
+      minPoolSize: 5,
+      socketTimeoutMS: 45000,
+      serverSelectionTimeoutMS: 5000,
+      family: 4,
+    };
+
+    cached.promise = mongoose.connect(process.env.MONGODB_URI, opts).then((mongoose) => {
+      console.log(`✅ MongoDB Connected (New Connection): ${mongoose.connection.host}`);
+      return mongoose;
+    }).catch(error => {
+      console.error(`❌ Error connecting to MongoDB: ${error.message}`);
+      cached.promise = null;
+      throw error;
+    });
+  }
+
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      // Connection pool settings for better performance
-      maxPoolSize: 10, // Maximum number of connections in the pool
-      minPoolSize: 5,  // Minimum number of connections to maintain
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      serverSelectionTimeoutMS: 5000, // Timeout for server selection
-      family: 4, // Use IPv4, skip trying IPv6
-    });
-
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-    console.log(`📊 Database: ${conn.connection.name}`);
-    console.log(`🔌 Connection Pool: Max ${10}, Min ${5}`);
-
-    // Handle connection events
-    mongoose.connection.on('error', (err) => {
-      console.error(`❌ MongoDB connection error: ${err}`);
-    });
-
-    mongoose.connection.on('disconnected', () => {
-      console.log('⚠️  MongoDB disconnected');
-    });
-
-    // Graceful shutdown
-    process.on('SIGINT', async () => {
-      await mongoose.connection.close();
-      console.log('MongoDB connection closed through app termination');
-      process.exit(0);
-    });
-
+    cached.conn = await cached.promise;
+    return cached.conn;
   } catch (error) {
-    console.error(`❌ Error connecting to MongoDB: ${error.message}`);
+    console.error(`❌ Final Error connecting to MongoDB: ${error.message}`);
     process.exit(1);
   }
 };
