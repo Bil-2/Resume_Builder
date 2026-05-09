@@ -1,49 +1,30 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+// Force dark always on document root
+const applyDark = () => document.documentElement.classList.add('dark');
+
 const useThemeStore = create(
   persist(
     (set) => ({
-      theme: 'light', // 'light' or 'dark'
-      
+      theme: 'dark',
+
       setTheme: (theme) => {
-        set({ theme });
-        // Apply theme to document
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
+        set({ theme: 'dark' });
+        applyDark();
       },
-      
+
       toggleTheme: () => {
-        set((state) => {
-          const newTheme = state.theme === 'light' ? 'dark' : 'light';
-          // Apply theme to document
-          if (newTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-          return { theme: newTheme };
-        });
+        // Always stay dark
+        applyDark();
       },
-      
+
       initializeTheme: () => {
-        set((state) => {
-          // Apply current theme to document on initialization
-          if (state.theme === 'dark') {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-          return state;
-        });
-      }
+        applyDark();
+        set({ theme: 'dark' });
+      },
     }),
-    {
-      name: 'theme-storage', // localStorage key
-    }
+    { name: 'theme-storage' }
   )
 );
 

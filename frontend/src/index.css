@@ -544,3 +544,129 @@ aside nav a span {
     page-break-after: always;
   }
 }
+
+/* ===== GLOBAL DARK THEME OVERRIDES ===== */
+/* These ensure every page matches the premium dark design */
+
+/* Force dark background on all page wrappers */
+.dark body,
+body {
+  background: #050a14;
+  color: #e2e8f0;
+}
+
+/* Dark cards used everywhere */
+.dark .bg-white,
+.dark .bg-gray-50,
+.dark .dark\:bg-dark-800,
+.dark .dark\:bg-gray-900,
+.dark .dark\:bg-gray-800 {
+  background-color: #0a1020 !important;
+}
+
+/* Auth pages dark background */
+.dark .dark\:from-dark-900,
+.dark .dark\:via-dark-800,
+.dark .dark\:to-dark-900 {
+  --tw-gradient-from: #050a14;
+  --tw-gradient-to: #050a14;
+}
+
+/* Universal card style for all dark cards */
+.dark [class*="card"],
+.dark .card {
+  background: #0a1020;
+  border-color: rgba(255,255,255,0.07);
+}
+
+/* ===== APP-WIDE COMPONENT OVERRIDES ===== */
+
+/* Sidebar desktop show */
+@media (min-width: 1024px) {
+  .sidebar-desktop { display: flex !important; }
+  .layout-main { margin-left: 220px !important; }
+}
+@media (max-width: 1023px) {
+  .layout-main { margin-left: 0 !important; padding: 20px 16px !important; }
+}
+
+/* Scrollbar dark */
+::-webkit-scrollbar-track { background: #080e1a; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+/* Form inputs dark universal */
+.dark input, .dark textarea, .dark select {
+  background: #0d1627 !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  color: #e2e8f0 !important;
+}
+.dark input::placeholder, .dark textarea::placeholder {
+  color: #475569 !important;
+}
+.dark input:focus, .dark textarea:focus, .dark select:focus {
+  border-color: rgba(99,102,241,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.12) !important;
+  outline: none;
+}
+
+/* Headings inherit */
+.dark h1, .dark h2, .dark h3, .dark h4 { color: #f1f5f9; }
+.dark p, .dark span:not([class*="text-"]) { }
+
+/* Borders dark */
+.dark .border, .dark [class*="border-gray"], .dark .dark\:border-gray-700 {
+  border-color: rgba(255,255,255,0.07) !important;
+}
+
+/* Skeleton dark */
+.dark .animate-pulse .bg-gray-200,
+.dark .animate-pulse [class*="bg-gray"] {
+  background-color: #1e293b !important;
+}
+
+/* Resume builder / preview bg */
+.dark .bg-gray-100 { background-color: #080e1a !important; }
+
+/* Stat cards universal dark */
+.dark .dark\:bg-blue-900\/20,
+.dark .dark\:bg-purple-900\/20,
+.dark .dark\:bg-green-900\/20,
+.dark .dark\:bg-orange-900\/20,
+.dark .dark\:bg-indigo-900\/20 {
+  background: rgba(99,102,241,0.08) !important;
+}
+
+/* Hover states */
+.dark .hover\:bg-gray-100:hover { background-color: rgba(255,255,255,0.05) !important; }
+.dark .dark\:hover\:bg-gray-800:hover { background-color: rgba(255,255,255,0.06) !important; }
+
+/* Dropdown / modal dark */
+.dark .dark\:bg-gray-700, .dark .dark\:bg-gray-800 { background-color: #0d1627 !important; }
+
+/* Text colors */
+.dark .text-gray-900 { color: #f1f5f9 !important; }
+.dark .text-gray-700 { color: #cbd5e1 !important; }
+.dark .text-gray-600 { color: #94a3b8 !important; }
+.dark .text-gray-500, .dark .text-gray-400 { color: #64748b !important; }
+.dark .dark\:text-white { color: #f1f5f9 !important; }
+.dark .dark\:text-gray-300 { color: #94a3b8 !important; }
+.dark .dark\:text-gray-400 { color: #64748b !important; }
+
+/* Primary accent stays indigo */
+.dark .text-primary-600, .dark .dark\:text-primary-400 { color: #818cf8 !important; }
+.dark .bg-primary-50 { background: rgba(99,102,241,0.1) !important; }
+
+/* Hr / divider */
+.dark hr { border-color: rgba(255,255,255,0.06) !important; }
+
+/* Table dark */
+.dark table { background: #0a1020; }
+.dark th { background: #080e1a !important; color: #64748b !important; }
+.dark td { border-color: rgba(255,255,255,0.05) !important; }
+
+/* Badge dark */
+.dark .badge-primary { background: rgba(99,102,241,0.12); color: #a5b4fc; border-color: rgba(99,102,241,0.2); }
+.dark .badge-success { background: rgba(74,222,128,0.1); color: #4ade80; border-color: rgba(74,222,128,0.2); }
+.dark .badge-warning { background: rgba(251,191,36,0.1); color: #fbbf24; border-color: rgba(251,191,36,0.2); }
+.dark .badge-danger  { background: rgba(248,113,113,0.1); color: #f87171; border-color: rgba(248,113,113,0.2); }

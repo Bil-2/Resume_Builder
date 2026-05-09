@@ -4,12 +4,13 @@ import Sidebar from './Sidebar';
 
 const Layout = () => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div style={{ minHeight: '100vh', background: '#050a14', color: '#e2e8f0' }}>
       <Navbar />
-      <div className="flex">
+      <div style={{ display: 'flex' }}>
         <Sidebar />
-        <main className="flex-1 p-6 lg:p-8 ml-0 lg:ml-64 mt-16">
-          <div className="max-w-7xl mx-auto">
+        <main style={{ flex: 1, padding: '24px 32px', marginLeft: '220px', marginTop: '64px', minHeight: 'calc(100vh - 64px)' }}
+          className="layout-main">
+          <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
             <Outlet />
           </div>
         </main>

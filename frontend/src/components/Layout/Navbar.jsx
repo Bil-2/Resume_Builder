@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, LogOut, Settings } from 'lucide-react';
+import { User, LogOut, Settings, ChevronDown, Bell } from 'lucide-react';
 import useAuthStore from '../../store/authStore';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import Logo from '../Logo/Logo';
 
 const Navbar = () => {
@@ -15,72 +14,118 @@ const Navbar = () => {
     navigate('/login');
   };
 
+  const initials = `${user?.firstName?.[0] ?? ''}${user?.lastName?.[0] ?? ''}`;
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 transition-colors duration-300">
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/dashboard" className="transition-transform duration-300 hover:scale-105">
-            <Logo size="md" showText={true} />
-          </Link>
+    <nav style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+      background: 'rgba(5,10,20,0.92)', backdropFilter: 'blur(16px)',
+      borderBottom: '1px solid rgba(255,255,255,0.06)',
+      height: '64px', display: 'flex', alignItems: 'center',
+    }}>
+      <div style={{ width: '100%', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* Logo */}
+        <Link to="/dashboard" style={{ textDecoration: 'none', transition: 'opacity .2s' }}>
+          <Logo size="md" showText={true} />
+        </Link>
 
-          {/* Right side - Theme Toggle & User Menu */}
-          <div className="flex items-center space-x-3">
-            {/* Theme Toggle */}
-            <ThemeToggle />
+        {/* Right Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
 
-            {/* User menu */}
-            <div className="relative">
+          {/* Bell */}
+          <button style={{
+            background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: '8px', width: '36px', height: '36px', display: 'flex',
+            alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b',
+            transition: 'all .2s',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.color = '#e2e8f0'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+          >
+            <Bell size={16} />
+          </button>
+
+          {/* User menu */}
+          <div style={{ position: 'relative' }}>
             <button
+              id="navbar-user-menu-btn"
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '10px',
+                background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '10px', padding: '6px 12px 6px 8px', cursor: 'pointer',
+                transition: 'all .2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(99,102,241,0.4)'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'}
             >
-              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
-                <span className="text-primary-700 font-semibold text-sm">
-                  {user?.firstName?.[0]}{user?.lastName?.[0]}
-                </span>
+              <div style={{
+                width: '30px', height: '30px', borderRadius: '50%',
+                background: 'linear-gradient(135deg,#3b82f6,#6366f1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '12px', fontWeight: '700', color: '#fff', flexShrink: 0,
+              }}>
+                {initials}
               </div>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-200 hidden sm:block">
+              <span style={{ fontSize: '13px', fontWeight: '500', color: '#cbd5e1', display: 'none' }}
+                className="sm-show">
                 {user?.firstName} {user?.lastName}
               </span>
+              <ChevronDown size={14} style={{ color: '#64748b', transition: 'transform .2s', transform: showUserMenu ? 'rotate(180deg)' : 'none' }} />
             </button>
 
-            {/* Dropdown menu */}
             {showUserMenu && (
               <>
-                <div
-                  className="fixed inset-0 z-10"
-                  onClick={() => setShowUserMenu(false)}
-                />
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-20">
-                  <Link
-                    to="/profile"
-                    className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    onClick={() => setShowUserMenu(false)}
+                <div style={{ position: 'fixed', inset: 0, zIndex: 10 }} onClick={() => setShowUserMenu(false)} />
+                <div style={{
+                  position: 'absolute', right: 0, top: 'calc(100% + 8px)',
+                  width: '200px', background: '#0d1627',
+                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.6)', zIndex: 20, overflow: 'hidden',
+                  padding: '6px',
+                }}>
+                  {/* User info */}
+                  <div style={{ padding: '10px 12px 12px', borderBottom: '1px solid rgba(255,255,255,0.06)', marginBottom: '6px' }}>
+                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#e2e8f0' }}>{user?.firstName} {user?.lastName}</div>
+                    <div style={{ fontSize: '11px', color: '#475569', marginTop: '2px' }}>{user?.email}</div>
+                  </div>
+
+                  {[
+                    { to: '/profile', icon: User, label: 'Profile' },
+                    { to: '/settings', icon: Settings, label: 'Settings' },
+                  ].map(item => (
+                    <Link key={item.to} to={item.to}
+                      onClick={() => setShowUserMenu(false)}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: '10px',
+                        padding: '9px 12px', borderRadius: '8px', textDecoration: 'none',
+                        fontSize: '13px', color: '#94a3b8', transition: 'all .15s',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#e2e8f0'; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#94a3b8'; }}
+                    >
+                      <item.icon size={15} />
+                      {item.label}
+                    </Link>
+                  ))}
+
+                  <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', margin: '6px 0' }} />
+
+                  <button onClick={handleLogout} style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    padding: '9px 12px', borderRadius: '8px', width: '100%',
+                    background: 'transparent', border: 'none', cursor: 'pointer',
+                    fontSize: '13px', color: '#f87171', transition: 'all .15s', textAlign: 'left',
+                  }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(248,113,113,0.1)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                   >
-                    <User size={16} />
-                    <span>Profile</span>
-                  </Link>
-                  <Link
-                    to="/settings"
-                    className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    onClick={() => setShowUserMenu(false)}
-                  >
-                    <Settings size={16} />
-                    <span>Settings</span>
-                  </Link>
-                  <hr className="my-1" />
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center space-x-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 w-full text-left"
-                  >
-                    <LogOut size={16} />
-                    <span>Logout</span>
+                    <LogOut size={15} />
+                    Sign Out
                   </button>
                 </div>
               </>
             )}
-            </div>
           </div>
         </div>
       </div>

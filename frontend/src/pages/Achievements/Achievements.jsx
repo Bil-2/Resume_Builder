@@ -113,11 +113,11 @@ const Achievements = () => {
             </div>
             
             <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4 slide-down delay-200">
-              🏆 Achievements & Awards
+              Achievements & Awards
             </h1>
             
             <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto slide-up delay-300">
-              Celebrating milestones, accomplishments, and recognition ✨🎉
+              Celebrating milestones, accomplishments, and recognition.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4 fade-in delay-500">
@@ -127,7 +127,7 @@ const Achievements = () => {
               >
                 <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
                 Add Achievement
-                <Sparkles className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               
               <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all duration-200 border-2 border-white/20 hover:border-white/40">

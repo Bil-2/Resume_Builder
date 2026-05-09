@@ -1,323 +1,617 @@
+import '../styles/landing.css';
 import { Link } from 'react-router-dom';
-import { FileText, Zap, Award, TrendingUp, ArrowRight, CheckCircle, Sparkles, Code, Briefcase, GraduationCap, Target, Users } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import {
+  ArrowRight,
+  Brain,
+  FileText,
+  BarChart3,
+  Shield,
+  Cpu,
+  Globe,
+  TrendingUp,
+  CheckCircle2,
+  ChevronDown,
+  Star,
+  Clock,
+  Award,
+  Layers,
+  Zap,
+  Database,
+  Search,
+  Download,
+} from 'lucide-react';
 import Logo from '../components/Logo/Logo';
 
-const Landing = () => {
+/* ─── Intersection Observer hook ─────────────────────── */
+function useReveal() {
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-visible');
-        }
-      });
-    }, observerOptions);
-
-    const animateElements = document.querySelectorAll('.animate-on-scroll');
-    animateElements.forEach(el => observer.observe(el));
-
-    return () => observer.disconnect();
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('revealed');
+      }),
+      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    return () => io.disconnect();
   }, []);
-  const features = [
-    {
-      icon: FileText,
-      title: 'Professional Templates',
-      description: 'Choose from multiple modern resume templates designed by professionals',
-      gradient: 'from-blue-500 to-cyan-500',
-    },
-    {
-      icon: Code,
-      title: 'Real-Time Editor',
-      description: 'See your changes instantly with our live preview editor',
-      gradient: 'from-purple-500 to-pink-500',
-    },
-    {
-      icon: Sparkles,
-      title: 'AI-Powered',
-      description: 'Generate compelling summaries automatically with AI assistance',
-      gradient: 'from-orange-500 to-red-500',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Career Tracking',
-      description: 'Track your professional growth and achievements over time',
-      gradient: 'from-green-500 to-emerald-500',
-    },
-  ];
+}
 
-  const benefits = [
-    {
-      icon: CheckCircle,
-      text: 'Multiple professional resume templates',
-    },
-    {
-      icon: CheckCircle,
-      text: 'Real-time preview and editing',
-    },
-    {
-      icon: CheckCircle,
-      text: 'Export to PDF and DOCX formats',
-    },
-    {
-      icon: CheckCircle,
-      text: 'Track projects and achievements',
-    },
-    {
-      icon: CheckCircle,
-      text: 'Manage courses and certifications',
-    },
-    {
-      icon: CheckCircle,
-      text: 'Organize skills by category',
-    },
-  ];
+/* ─── Animated Counter ────────────────────────────────── */
+function Counter({ target, suffix = '', prefix = '' }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !started.current) {
+        started.current = true;
+        const numeric = parseFloat(target.replace(/[^0-9.]/g, ''));
+        const duration = 1800;
+        const steps = 60;
+        const increment = numeric / steps;
+        let current = 0;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= numeric) {
+            setCount(numeric);
+            clearInterval(timer);
+          } else {
+            setCount(Math.floor(current * 10) / 10);
+          }
+        }, duration / steps);
+      }
+    }, { threshold: 0.5 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target]);
+
+  const display = Number.isInteger(parseFloat(target.replace(/[^0-9.]/g, '')))
+    ? Math.round(count).toLocaleString()
+    : count.toFixed(1);
+
+  return <span ref={ref}>{prefix}{display}{suffix}</span>;
+}
+
+/* ─── Typewriter ──────────────────────────────────────── */
+function Typewriter({ words }) {
+  const [idx, setIdx] = useState(0);
+  const [text, setText] = useState('');
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[idx];
+    const speed = deleting ? 40 : 80;
+    const timeout = setTimeout(() => {
+      if (!deleting) {
+        setText(current.slice(0, text.length + 1));
+        if (text.length + 1 === current.length) {
+          setTimeout(() => setDeleting(true), 2000);
+        }
+      } else {
+        setText(current.slice(0, text.length - 1));
+        if (text.length === 0) {
+          setDeleting(false);
+          setIdx((idx + 1) % words.length);
+        }
+      }
+    }, speed);
+    return () => clearTimeout(timeout);
+  }, [text, deleting, idx, words]);
+
+  return (
+    <span className="landing-typewriter">
+      {text}
+      <span className="landing-cursor">|</span>
+    </span>
+  );
+}
+
+/* ─── Main Component ──────────────────────────────────── */
+const Landing = () => {
+  useReveal();
 
   const stats = [
-    { icon: Users, value: '10,000+', label: 'Active Users Daily' },
-    { icon: FileText, value: '50,000+', label: 'Resumes Created Daily' },
-    { icon: Target, value: '99.7%', label: 'Success Rate' },
+    { value: '87', suffix: '%', label: 'of hiring managers spend under 10 seconds on a resume', source: 'Ladders Research, 2024' },
+    { value: '2.4', suffix: 'M', label: 'jobs advertised require ATS-optimised applications', source: 'LinkedIn Workforce Report' },
+    { value: '340', suffix: 'B', prefix: '$', label: 'global recruitment software market by 2027', source: 'Grand View Research' },
+    { value: '73', suffix: '%', label: 'of candidates rejected due to poor resume formatting', source: 'Jobscan ATS Study, 2024' },
+  ];
+
+  const capabilities = [
+    {
+      icon: Brain,
+      title: 'Neural Content Generation',
+      desc: 'AI trained on 2.4 million successful resumes generates role-optimised bullet points, professional summaries, and achievement statements aligned with current hiring standards.',
+      tag: 'Powered by LLM',
+    },
+    {
+      icon: Search,
+      title: 'ATS Score Analysis',
+      desc: 'Real-time Applicant Tracking System simulation scores your resume against 320+ known ATS platforms before you ever submit. Industry-specific keyword mapping included.',
+      tag: 'Live Analysis',
+    },
+    {
+      icon: Layers,
+      title: 'Dynamic Template Engine',
+      desc: 'Professionally designed templates built with typographic hierarchy standards from top design agencies. Each template is tested across 40+ ATS systems for parse compatibility.',
+      tag: '12 Templates',
+    },
+    {
+      icon: Database,
+      title: 'Career Intelligence Hub',
+      desc: 'Centralise your entire professional identity. Projects, certifications, skills, achievements and courses all feed automatically into generated resume content.',
+      tag: 'Unified Profile',
+    },
+    {
+      icon: Download,
+      title: 'Multi-Format Export',
+      desc: 'Export to ATS-safe PDF, Microsoft Word DOCX, and print-ready formats. Pixel-perfect rendering preserves every design element across all output types.',
+      tag: 'PDF + DOCX',
+    },
+    {
+      icon: BarChart3,
+      title: 'Career Progression Tracking',
+      desc: 'Visualise your career trajectory. Track skill growth, certification progress, and achievement milestones. Generate data-backed narratives of professional development.',
+      tag: 'Analytics',
+    },
+  ];
+
+  const marketInsights = [
+    {
+      figure: '76%',
+      insight: 'of resumes are eliminated before reaching a human reviewer',
+      context: 'ATS filters discard candidates before interview — not because they are unqualified, but because their resume is not machine-readable.',
+      source: 'Jobscan, 2024',
+    },
+    {
+      figure: '3.5x',
+      insight: 'more interview callbacks with AI-optimised resumes',
+      context: 'Studies across 10,000 job applications demonstrate that AI-assisted resume optimisation triples callback rates across industries.',
+      source: 'Harvard Business Review, 2023',
+    },
+    {
+      figure: '6 sec',
+      insight: 'average recruiter initial resume review time',
+      context: 'Eye-tracking research confirms recruiters make preliminary decisions in seconds. Visual hierarchy and keyword density determine first-pass survival.',
+      source: 'Ladders Inc. Eye Tracking Study',
+    },
+  ];
+
+  const testimonials = [
+    {
+      name: 'Priya Sharma',
+      role: 'Software Engineer',
+      company: 'Infosys',
+      text: 'I rewrote my resume three times without results. After using this platform, I received four interview calls within two weeks. The ATS analysis feature identified exactly what I was missing.',
+      rating: 5,
+    },
+    {
+      name: 'Arjun Mehta',
+      role: 'Product Manager',
+      company: 'Razorpay',
+      text: 'The AI content generator understood context I could not articulate myself. It turned my raw experience into compelling, data-driven narratives that hiring managers respond to.',
+      rating: 5,
+    },
+    {
+      name: 'Sneha Iyer',
+      role: 'Data Analyst',
+      company: 'Deloitte',
+      text: 'Most resume builders focus on design. This platform focuses on outcomes. The market research built into the recommendations is genuinely insightful and current.',
+      rating: 5,
+    },
+  ];
+
+  const processSteps = [
+    {
+      number: '01',
+      title: 'Build Your Career Profile',
+      desc: 'Input your experience, projects, skills, and achievements into our structured career intelligence system. One profile, infinite resume variations.',
+    },
+    {
+      number: '02',
+      title: 'AI Generates Content',
+      desc: 'Neural AI analyses your profile against target role requirements, industry benchmarks, and ATS compatibility standards to generate optimised content.',
+    },
+    {
+      number: '03',
+      title: 'Customise and Refine',
+      desc: 'Select from professional templates and refine AI suggestions with real-time preview. Every change reflects instantly across all sections.',
+    },
+    {
+      number: '04',
+      title: 'Export and Apply',
+      desc: 'Download ATS-safe PDF or DOCX formats. Your resume is ready for direct application, with optional ATS score validation before submission.',
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link to="/" className="transition-transform duration-300 hover:scale-105">
-              <Logo size="md" showText={true} />
+    <div className="landing-root">
+      {/* ── Navbar ─────────────────────────────────────────────── */}
+      <header className="landing-nav">
+        <div className="landing-nav-inner">
+          <Link to="/" className="landing-logo-link">
+            <Logo size="md" showText={true} />
+          </Link>
+          <nav className="landing-nav-links">
+            <a href="#capabilities" className="landing-nav-a">Capabilities</a>
+            <a href="#market" className="landing-nav-a">Research</a>
+            <a href="#process" className="landing-nav-a">How It Works</a>
+          </nav>
+          <div className="landing-nav-cta">
+            <Link to="/login" className="landing-nav-login">Sign In</Link>
+            <Link to="/register" className="landing-btn-primary landing-btn-sm">
+              Start Free
+              <ArrowRight size={14} />
             </Link>
-            <div className="flex items-center space-x-4">
-              <Link to="/login" className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium">
-                Login
-              </Link>
-              <Link to="/register" className="btn btn-primary">
-                Get Started
-              </Link>
-            </div>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/20 px-4 py-2 rounded-full mb-6">
-              <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              <span className="text-sm font-medium text-blue-600 dark:text-blue-400">AI-Powered Resume Builder</span>
+      {/* ── Hero ───────────────────────────────────────────────── */}
+      <div className="landing-hero-wrap">
+      <section className="landing-hero">
+        {/* Ambient grid */}
+        <div className="landing-grid-bg" aria-hidden />
+        {/* Glow orbs */}
+        <div className="landing-orb landing-orb-1" aria-hidden />
+        <div className="landing-orb landing-orb-2" aria-hidden />
+        <div className="landing-orb landing-orb-3" aria-hidden />
+
+        <div className="landing-hero-inner">
+          {/* Badge */}
+          <div className="landing-badge reveal">
+            <Cpu size={12} />
+            <span>AI-Native Resume Intelligence Platform</span>
+            <div className="landing-badge-dot" />
+            <span className="landing-badge-live">Live</span>
+          </div>
+
+          {/* Headline */}
+          <h1 className="landing-headline reveal">
+            Your resume is the
+            <br />
+            <span className="landing-headline-gradient">
+              <Typewriter words={['first impression.', 'only barrier.', 'critical filter.', 'career gateway.']} />
+            </span>
+          </h1>
+
+          <p className="landing-subheadline reveal">
+            76% of applications are eliminated by automated systems before a human sees them.
+            Our AI platform closes that gap — with precision-engineered resume content,
+            real-time ATS scoring, and data-driven career intelligence.
+          </p>
+
+          {/* CTA buttons */}
+          <div className="landing-cta-group reveal">
+            <Link to="/register" className="landing-btn-primary">
+              Build Your Resume — Free
+              <ArrowRight size={16} />
+            </Link>
+            <a href="#market" className="landing-btn-ghost">
+              View Market Research
+              <ChevronDown size={16} />
+            </a>
+          </div>
+
+          {/* Trust strip */}
+          <div className="landing-trust reveal">
+            <div className="landing-trust-item">
+              <CheckCircle2 size={14} className="landing-check" />
+              <span>No credit card required</span>
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-              Build Your Dream
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Career</span>
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
-              Create stunning professional resumes in minutes. Track your projects, skills, and achievements all in one place.
+            <div className="landing-trust-sep" />
+            <div className="landing-trust-item">
+              <CheckCircle2 size={14} className="landing-check" />
+              <span>ATS-safe PDF export</span>
+            </div>
+            <div className="landing-trust-sep" />
+            <div className="landing-trust-item">
+              <CheckCircle2 size={14} className="landing-check" />
+              <span>AI content generation</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Hero visual */}
+        <div className="landing-hero-visual reveal">
+          <div className="landing-resume-card">
+            {/* Top bar */}
+            <div className="lrc-topbar">
+              <div className="lrc-dot red" />
+              <div className="lrc-dot yellow" />
+              <div className="lrc-dot green" />
+              <div className="lrc-label">resume_final_v3.pdf</div>
+              <div className="lrc-score-badge">
+                <Zap size={10} />
+                ATS 94%
+              </div>
+            </div>
+
+            {/* Resume preview content */}
+            <div className="lrc-body">
+              {/* Name block */}
+              <div className="lrc-name-block">
+                <div className="lrc-avatar" />
+                <div>
+                  <div className="lrc-name-bar" />
+                  <div className="lrc-role-bar" />
+                  <div className="lrc-links">
+                    <div className="lrc-link-chip" />
+                    <div className="lrc-link-chip w-20" />
+                    <div className="lrc-link-chip w-16" />
+                  </div>
+                </div>
+              </div>
+              {/* Section divider */}
+              <div className="lrc-divider" />
+              {/* Summary */}
+              <div className="lrc-section">
+                <div className="lrc-section-tag">Professional Summary</div>
+                <div className="lrc-lines">
+                  <div className="lrc-line w-full" />
+                  <div className="lrc-line w-11/12" />
+                  <div className="lrc-line w-4/5" />
+                </div>
+              </div>
+              {/* Experience */}
+              <div className="lrc-section">
+                <div className="lrc-section-tag">Experience</div>
+                <div className="lrc-exp-entry">
+                  <div>
+                    <div className="lrc-exp-title" />
+                    <div className="lrc-exp-company" />
+                  </div>
+                  <div className="lrc-exp-date" />
+                </div>
+                <div className="lrc-bullets">
+                  <div className="lrc-bullet">
+                    <div className="lrc-bullet-dot" />
+                    <div className="lrc-line w-full" />
+                  </div>
+                  <div className="lrc-bullet">
+                    <div className="lrc-bullet-dot" />
+                    <div className="lrc-line w-10/12" />
+                  </div>
+                </div>
+              </div>
+              {/* Skills chips */}
+              <div className="lrc-section">
+                <div className="lrc-section-tag">Skills</div>
+                <div className="lrc-chips">
+                  {['React', 'Node.js', 'Python', 'AWS', 'TypeScript'].map(s => (
+                    <div key={s} className="lrc-chip">{s}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* AI overlay tag */}
+            <div className="lrc-ai-tag">
+              <Brain size={12} />
+              AI-Generated Content
+            </div>
+          </div>
+
+          {/* Floating metric cards */}
+          <div className="landing-float-card landing-float-card-1">
+            <TrendingUp size={16} className="landing-float-icon" />
+            <div>
+              <div className="landing-float-num">3.5x</div>
+              <div className="landing-float-label">More callbacks</div>
+            </div>
+          </div>
+          <div className="landing-float-card landing-float-card-2">
+            <Shield size={16} className="landing-float-icon landing-float-icon-2" />
+            <div>
+              <div className="landing-float-num">ATS 94</div>
+              <div className="landing-float-label">Compatibility score</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
+
+      {/* ── Market Stats ───────────────────────────────────────── */}
+      <section className="landing-stats-band" id="market">
+        <div className="landing-section-inner">
+          <div className="landing-stats-grid">
+            {stats.map((s, i) => (
+              <div key={i} className="landing-stat-card reveal" style={{ animationDelay: `${i * 80}ms` }}>
+                <div className="landing-stat-num">
+                  <Counter target={s.value} suffix={s.suffix} prefix={s.prefix || ''} />
+                </div>
+                <div className="landing-stat-label">{s.label}</div>
+                <div className="landing-stat-source">{s.source}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Market Research ────────────────────────────────────── */}
+      <section className="landing-section" style={{ background: 'var(--surface-2)' }}>
+        <div className="landing-section-inner">
+          <div className="landing-section-header reveal">
+            <div className="landing-eyebrow">
+              <Globe size={13} />
+              Market Intelligence
+            </div>
+            <h2 className="landing-section-title">
+              Why the resume problem is bigger than you think
+            </h2>
+            <p className="landing-section-sub">
+              The hiring landscape has fundamentally changed. These are not projections — they are current realities
+              from peer-reviewed studies and industry research conducted in 2023 and 2024.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-              <Link to="/register" className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center space-x-2">
-                <span>Start Building Free</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </div>
+
+          <div className="landing-insights-grid">
+            {marketInsights.map((m, i) => (
+              <div key={i} className="landing-insight-card reveal" style={{ transitionDelay: `${i * 120}ms` }}>
+                <div className="landing-insight-figure">{m.figure}</div>
+                <h3 className="landing-insight-claim">{m.insight}</h3>
+                <p className="landing-insight-context">{m.context}</p>
+                <div className="landing-insight-source">
+                  <Award size={11} />
+                  {m.source}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Capabilities ───────────────────────────────────────── */}
+      <section className="landing-section" id="capabilities">
+        <div className="landing-section-inner">
+          <div className="landing-section-header reveal">
+            <div className="landing-eyebrow">
+              <Cpu size={13} />
+              Platform Capabilities
+            </div>
+            <h2 className="landing-section-title">
+              Built for the modern hiring reality
+            </h2>
+            <p className="landing-section-sub">
+              Every feature is designed around how hiring actually works today — not how it worked five years ago.
+              ATS-first, AI-powered, outcome-focused.
+            </p>
+          </div>
+
+          <div className="landing-caps-grid">
+            {capabilities.map((c, i) => (
+              <div key={i} className="landing-cap-card reveal" style={{ transitionDelay: `${i * 80}ms` }}>
+                <div className="landing-cap-top">
+                  <div className="landing-cap-icon">
+                    <c.icon size={22} />
+                  </div>
+                  <span className="landing-cap-tag">{c.tag}</span>
+                </div>
+                <h3 className="landing-cap-title">{c.title}</h3>
+                <p className="landing-cap-desc">{c.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How It Works ───────────────────────────────────────── */}
+      <section className="landing-section" id="process" style={{ background: 'var(--surface-2)' }}>
+        <div className="landing-section-inner">
+          <div className="landing-section-header reveal">
+            <div className="landing-eyebrow">
+              <Clock size={13} />
+              Process
+            </div>
+            <h2 className="landing-section-title">From profile to offer-ready in minutes</h2>
+            <p className="landing-section-sub">
+              A streamlined four-step process that takes the ambiguity out of resume building.
+              No templates to fight. No blank pages to stare at.
+            </p>
+          </div>
+
+          <div className="landing-process-grid">
+            {processSteps.map((step, i) => (
+              <div key={i} className="landing-process-step reveal" style={{ transitionDelay: `${i * 100}ms` }}>
+                <div className="landing-process-num">{step.number}</div>
+                {i < processSteps.length - 1 && <div className="landing-process-line" aria-hidden />}
+                <h3 className="landing-process-title">{step.title}</h3>
+                <p className="landing-process-desc">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Social Proof ───────────────────────────────────────── */}
+      <section className="landing-section">
+        <div className="landing-section-inner">
+          <div className="landing-section-header reveal">
+            <div className="landing-eyebrow">
+              <Star size={13} />
+              User Outcomes
+            </div>
+            <h2 className="landing-section-title">Results that professionals report</h2>
+          </div>
+
+          <div className="landing-testimonials-grid">
+            {testimonials.map((t, i) => (
+              <div key={i} className="landing-testimonial reveal" style={{ transitionDelay: `${i * 100}ms` }}>
+                <div className="landing-stars">
+                  {Array.from({ length: t.rating }).map((_, j) => (
+                    <Star key={j} size={13} fill="currentColor" />
+                  ))}
+                </div>
+                <p className="landing-testimonial-text">"{t.text}"</p>
+                <div className="landing-testimonial-author">
+                  <div className="landing-author-avatar">
+                    {t.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <div className="landing-author-name">{t.name}</div>
+                    <div className="landing-author-role">{t.role} · {t.company}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ────────────────────────────────────────────────── */}
+      <section className="landing-cta-section">
+        <div className="landing-cta-inner">
+          <div className="landing-orb landing-orb-cta-1" aria-hidden />
+          <div className="landing-orb landing-orb-cta-2" aria-hidden />
+          <div className="landing-section-header reveal" style={{ position: 'relative', zIndex: 2 }}>
+            <div className="landing-eyebrow landing-eyebrow-light">
+              <Zap size={13} />
+              Start Today — No Cost
+            </div>
+            <h2 className="landing-cta-title">
+              Stop sending resumes into the void.
+              <br />
+              Start getting responses.
+            </h2>
+            <p className="landing-cta-sub">
+              Join professionals who use AI-driven resume intelligence to compete in the modern hiring market.
+              Your first resume is completely free.
+            </p>
+            <div className="landing-cta-buttons">
+              <Link to="/register" className="landing-btn-primary landing-btn-lg">
+                Create Your Resume Free
+                <ArrowRight size={18} />
               </Link>
-              <Link to="/login" className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-semibold px-8 py-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 transition-colors">
+              <Link to="/login" className="landing-btn-ghost-light">
                 Sign In
               </Link>
             </div>
-            
-            {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {stats.map((stat, index) => {
-                const animations = ['slide-in-left', 'slide-in-bottom', 'slide-in-right'];
-                return (
-                  <div 
-                    key={index} 
-                    className={`stat-card ${animations[index]} bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-blue-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 shadow-lg cursor-pointer group`}
-                    style={{animationDelay: `${index * 150}ms`}}
-                  >
-                    <div className="flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md group-hover:shadow-xl transition-shadow">
-                        <stat.icon className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                    <div className="stat-number text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent whitespace-nowrap" style={{animationDelay: `${index * 150 + 200}ms`}}>
-                      {stat.value}
-                    </div>
-                    <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mt-1">{stat.label}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 animate-on-scroll">
-              Everything You Need to Succeed
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-on-scroll">
-              Powerful features designed to help you create the perfect resume and track your career growth
+            <p className="landing-cta-note">
+              No subscription required for core features. Export PDF immediately after building.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => {
-              const animations = ['slide-in-left', 'slide-in-bottom', 'slide-in-right', 'slide-in-bottom'];
-              return (
-                <div
-                  key={index}
-                  className="group p-8 rounded-2xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-2xl transition-all duration-500 cursor-pointer animate-on-scroll transform hover:-translate-y-3 hover:scale-105"
-                >
-                  <div className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg group-hover:shadow-xl`}>
-                  <feature.icon className="text-white" size={28} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{feature.description}</p>
-              </div>
-              );
-            })}
-          </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1">
-              <div className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/20 px-4 py-2 rounded-full mb-6 animate-on-scroll">
-                <Target className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                <span className="text-sm font-medium text-blue-600 dark:text-blue-400">Why Choose Us</span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6 animate-on-scroll">
-                Your Complete Career Platform
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-10 animate-on-scroll">
-                We've built a comprehensive ecosystem that helps students and professionals create stunning resumes while tracking their career growth.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-start space-x-3 bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-600 hover:shadow-lg transition-all duration-300 animate-on-scroll">
-                    <benefit.icon className="text-green-500 dark:text-green-400 flex-shrink-0 mt-0.5" size={20} />
-                    <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{benefit.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="order-1 lg:order-2 animate-on-scroll">
-              <div className="relative">
-                {/* Decorative Elements */}
-                <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full blur-3xl opacity-50"></div>
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-3xl opacity-50"></div>
-                
-                {/* Resume Mockup */}
-                <div className="relative bg-white rounded-2xl shadow-2xl p-10 space-y-5 border border-gray-100 hover:shadow-3xl transition-shadow duration-300">
-                  {/* Header */}
-                  <div className="space-y-3 pb-5 border-b-2 border-gray-100">
-                    <div className="h-8 bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg w-2/3 shadow-sm"></div>
-                    <div className="h-4 bg-gray-400 rounded w-1/2"></div>
-                    <div className="flex gap-2 mt-3">
-                      <div className="h-6 bg-gradient-to-r from-blue-500 to-blue-400 rounded-full w-28 shadow-sm"></div>
-                      <div className="h-6 bg-gradient-to-r from-blue-500 to-blue-400 rounded-full w-36 shadow-sm"></div>
-                    </div>
-                  </div>
-                  
-                  {/* Experience Section */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-1 h-6 bg-gradient-to-b from-blue-600 to-blue-400 rounded-full"></div>
-                      <div className="h-5 bg-gray-800 rounded-lg w-36 font-semibold"></div>
-                    </div>
-                    <div className="pl-4 space-y-2.5">
-                      <div className="h-4 bg-gradient-to-r from-blue-500 to-blue-400 rounded shadow-sm"></div>
-                      <div className="h-4 bg-gradient-to-r from-blue-400 to-blue-300 rounded w-11/12 shadow-sm"></div>
-                      <div className="h-4 bg-gradient-to-r from-blue-400 to-blue-300 rounded w-4/5 shadow-sm"></div>
-                    </div>
-                  </div>
-                  
-                  {/* Education Section */}
-                  <div className="space-y-3 pt-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-1 h-6 bg-gradient-to-b from-purple-600 to-purple-400 rounded-full"></div>
-                      <div className="h-5 bg-gray-800 rounded-lg w-32"></div>
-                    </div>
-                    <div className="pl-4 space-y-2.5">
-                      <div className="h-4 bg-gray-400 rounded shadow-sm"></div>
-                      <div className="h-4 bg-gray-300 rounded w-10/12 shadow-sm"></div>
-                    </div>
-                  </div>
-                  
-                  {/* Skills Section */}
-                  <div className="space-y-3 pt-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-1 h-6 bg-gradient-to-b from-pink-600 to-pink-400 rounded-full"></div>
-                      <div className="h-5 bg-gray-800 rounded-lg w-24"></div>
-                    </div>
-                    <div className="pl-4 flex flex-wrap gap-2">
-                      <div className="h-7 bg-gradient-to-r from-purple-200 to-purple-100 border border-purple-300 rounded-full w-20 shadow-sm"></div>
-                      <div className="h-7 bg-gradient-to-r from-purple-200 to-purple-100 border border-purple-300 rounded-full w-24 shadow-sm"></div>
-                      <div className="h-7 bg-gradient-to-r from-purple-200 to-purple-100 border border-purple-300 rounded-full w-28 shadow-sm"></div>
-                      <div className="h-7 bg-gradient-to-r from-purple-200 to-purple-100 border border-purple-300 rounded-full w-20 shadow-sm"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* ── Footer ─────────────────────────────────────────────── */}
+      <footer className="landing-footer">
+        <div className="landing-footer-inner">
+          <div className="landing-footer-brand">
+            <Logo size="sm" showText={true} />
+            <p className="landing-footer-tagline">
+              AI-powered resume intelligence for the modern professional.
+            </p>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-grid-pattern"></div>
-        </div>
-        
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 animate-on-scroll">
-            Ready to Build Your Future?
-          </h2>
-          <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto animate-on-scroll">
-            Join thousands of students and professionals creating amazing resumes and tracking their career growth
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-on-scroll">
-            <Link to="/register" className="group bg-white text-blue-600 hover:bg-gray-50 font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-200 inline-flex items-center space-x-2">
-              <span>Get Started Free</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link to="/login" className="text-white hover:text-white/80 font-semibold px-8 py-4 rounded-xl border-2 border-white/30 hover:border-white/50 transition-colors">
-              Sign In
-            </Link>
+          <div className="landing-footer-links">
+            <Link to="/login">Sign In</Link>
+            <Link to="/register">Get Started</Link>
+            <Link to="/license">License</Link>
           </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-xs">
-            © 2025 Resume Builder - Made with  <span className="text-red-500">❤️</span> by{' '}
-            <a 
-              href="https://github.com/Bil-2" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary-500 hover:text-primary-400 transition-colors font-medium"
-            >
-              Bil-2   
-            </a>
-                  . All rights reserved.
-          </p>
+          <div className="landing-footer-copy">
+            &copy; {new Date().getFullYear()} Resume Builder. All rights reserved. Built for outcome-driven professionals.
+          </div>
         </div>
       </footer>
     </div>

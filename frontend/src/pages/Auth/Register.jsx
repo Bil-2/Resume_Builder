@@ -50,7 +50,7 @@ const Register = () => {
       const { user, token } = response.data.data;
 
       setAuth(user, token);
-      toast.success(`Welcome aboard, ${user.firstName}! 🎉`);
+      toast.success(`Welcome aboard, ${user.firstName}!`);
       navigate('/dashboard');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed');
@@ -86,7 +86,7 @@ const Register = () => {
 
       const { user, token } = response.data.data;
       setAuth(user, token);
-      toast.success(`Welcome aboard, ${user.firstName}! 🎉`);
+      toast.success(`Welcome aboard, ${user.firstName}!`);
       navigate('/dashboard');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Google sign-up failed');

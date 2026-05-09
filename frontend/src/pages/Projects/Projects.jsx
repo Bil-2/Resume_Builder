@@ -39,8 +39,8 @@ const Projects = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between slide-down delay-100">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">💼 Projects</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your project portfolio 🚀</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Projects</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Manage your project portfolio.</p>
         </div>
         <Link to="/projects/new" className="btn btn-primary flex items-center space-x-2">
           <Plus size={20} />
@@ -52,7 +52,7 @@ const Projects = () => {
         <div className="scroll-animate card text-center py-12">
           <Briefcase className="mx-auto text-gray-400 mb-4" size={48} />
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No projects yet 🛠️</h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">Add your first project to showcase your work ✨</p>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">Add your first project to showcase your work.</p>
           <Link to="/projects/new" className="btn btn-primary inline-flex items-center space-x-2">
             <Plus size={20} />
             <span>Add Your First Project</span>

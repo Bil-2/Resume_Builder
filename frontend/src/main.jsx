@@ -6,6 +6,9 @@ import { Toaster } from 'react-hot-toast';
 import App from './App';
 import './index.css';
 
+// Apply dark mode immediately — no flash
+document.documentElement.classList.add('dark');
+
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
 const AppContent = () => (
@@ -21,22 +24,20 @@ const AppContent = () => (
       toastOptions={{
         duration: 4000,
         style: {
-          background: '#363636',
-          color: '#fff',
+          background: '#0d1627',
+          color: '#e2e8f0',
+          border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: '10px',
+          fontSize: '13px',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
         },
         success: {
           duration: 3000,
-          iconTheme: {
-            primary: '#10b981',
-            secondary: '#fff',
-          },
+          iconTheme: { primary: '#4ade80', secondary: '#0d1627' },
         },
         error: {
           duration: 4000,
-          iconTheme: {
-            primary: '#ef4444',
-            secondary: '#fff',
-          },
+          iconTheme: { primary: '#f87171', secondary: '#0d1627' },
         },
       }}
     />

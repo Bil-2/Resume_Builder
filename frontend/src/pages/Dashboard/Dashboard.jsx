@@ -177,7 +177,7 @@ const Dashboard = () => {
             <span className="text-white/90 font-medium">Dashboard</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Welcome back, {user?.firstName}! 👋✨
+            Welcome back, {user?.firstName}.
           </h1>
           <p className="text-white/90 text-lg mb-6 max-w-2xl">
             Track your career progress and build stunning resumes that stand out
@@ -212,7 +212,7 @@ const Dashboard = () => {
           <div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Quick Actions</h2>
             <p className="text-gray-600 dark:text-gray-400">
-            Here's what's happening with your career today 🚀
+            Here is what is happening with your career today.
           </p>
           </div>
           <Zap className="w-6 h-6 text-yellow-500" />

@@ -102,10 +102,10 @@ const Courses = () => {
             </div>
             
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4 slide-in-bottom delay-200">
-              📚 Learning Journey
+              Learning Journey
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto slide-in-bottom delay-300">
-              Track your courses, certifications, and continuous learning path 🎓✨
+              Track your courses, certifications, and continuous learning path.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4 fade-in delay-500">
@@ -311,7 +311,7 @@ const Courses = () => {
                   {/* Category */}
                   {course.category && (
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg text-xs font-medium text-gray-700 dark:text-gray-300 mb-4">
-                      📚 {course.category}
+                      {course.category}
                     </div>
                   )}
 

@@ -32,24 +32,23 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false
 }));
 
-// CORS configuration
+// CORS configuration — allows localhost in dev + production URL
 const allowedOrigins = [
   'http://localhost:3000',
-  process.env.CLIENT_URL
+  'http://localhost:5173',
+  process.env.CLIENT_URL,
 ].filter(Boolean);
 
-// Enable CORS for all routes and forcefully handle OPTIONS preflight.
-// Using explicit headers is more reliable in Vercel than the 'cors' package.
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://resume-builder-biltu.netlify.app');
+  const origin = req.headers.origin;
+  if (!origin || allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin || '*');
+  }
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
   if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, PATCH, DELETE, OPTIONS');
     return res.status(200).json({});
   }
 
