@@ -7,6 +7,10 @@
     @apply border-gray-200;
   }
   
+  html, body, #root {
+    min-height: 100vh;
+  }
+
   body {
     @apply bg-gray-50 text-gray-900 antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
